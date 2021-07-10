@@ -1192,8 +1192,8 @@ label {
 .nav-menu {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (auto)[4];
-      grid-template-columns: repeat(4, auto);
+  /* -ms-grid-columns: (auto)[4]; */
+  grid-template-columns: repeat(4, auto);
   grid-gap: 10px;
   list-style: none;
   text-align: center;
@@ -1208,8 +1208,8 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-grid-columns: (auto)[4];
-      grid-template-columns: repeat(4, auto);
+  /* -ms-grid-columns: (auto)[4]; */
+  grid-template-columns: repeat(4, auto);
   grid-gap: 10px;
   list-style: none;
   text-align: center;
