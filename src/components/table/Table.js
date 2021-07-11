@@ -63,7 +63,7 @@ export const Table = ({ columns, data }) => {
   
     // Render the UI for your table
     return (
-      <>
+      <div className="tableDiv">
         <table {...getTableProps()}>
           <thead>
             {headerGroups.map(headerGroup => (
@@ -138,7 +138,7 @@ export const Table = ({ columns, data }) => {
             ))}
           </select>
         </div>
-      </>
+      </div>
     )
   }
 
