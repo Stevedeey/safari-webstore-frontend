@@ -23,6 +23,17 @@ const productApis = {
     return product;
   },
 
+  getFavorites: async ()=>{
+    // let favorites = null;
+    console.log("in get favourites", setHeader())
+    try{
+    const favourites = await axios.get(`http://localhost:8045/api/customer/favourite/products`, setHeader());
+    return favourites;
+    }catch(error){
+      console.log(error);
+    }
+  },
+
   getAllProducts: async () => {
     const { data: products } = await axios.get(`${BaseUrl}/products`);
 
