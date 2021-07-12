@@ -20,6 +20,15 @@ const OrderApi = {
 
     return ordersByStatus;
   },
+
+  placeUserOrders: async (data) => {
+    console.log(setHeader());
+    return await axios.post(`${BaseUrl}/check-out`, data, setHeader());
+  },
+
+  placePaymentOrder: async (data) => {
+    return await axios.get(`${BaseUrl}/api/payment/pay/${data}`, setHeader());
+  },
 };
 
 export default OrderApi;

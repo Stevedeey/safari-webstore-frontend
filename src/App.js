@@ -8,7 +8,7 @@ import Cart from "./pages/CartPage";
 import SignInSignUp from "./pages/SignInSignUpPage";
 import TermsConditions from "./pages/TermsConditionsPage";
 import Clothes from "./pages/categories/Clothes";
-import Checkout from "./pages/CheckoutPage"
+import Checkout from "./pages/CheckoutPage";
 // import Shoes from './pages/categories/ShoesPage'
 // import Accessories from './pages/categories/AccessoriesPage'
 import AccountInfo from "./pages/account/Account";
@@ -21,8 +21,8 @@ import AdminProducts from "./pages/adminproducts/AdminProducts";
 import ProductPage from "./pages/ProductPage";
 import ProductItemLayout from "./components/ProductItemLayout";
 import SearchPage from "./pages/SearchPage";
-import FavouritesPage from './pages/FavouritesPage';
-
+import FavouritesPage from "./pages/FavouritesPage";
+import ConfirmOrderPage from "./pages/ConfirmOrderPage";
 
 function App() {
   return (
@@ -44,14 +44,15 @@ function App() {
           <Route path="/account/myorders" component={AccountMyOrders} />
           <Route path="/account/myfavourites" component={AccountMyFavourites} />
           <Route path="/admin/dashboard" component={AdminDashboard} />
-          <Route path ='/favourites' component={FavouritesPage} />
+          <Route path="/favourites" component={FavouritesPage} />
           <Route path="/admin/orders" component={AdminOrders} />
           <Route path="/admin/products" component={AdminProducts} />
           <Route path="/search?keyword=data" component={SearchPage} />
           <Route path="/product/:id" component={ProductPage} />
           <Route path="/product" component={ProductPage} />
           <Route path="/search" component={SearchPage} />
-          <Route path ="/checkout" component={Checkout} />
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/confirm-order/:orderId" component={ConfirmOrderPage} />
         </Switch>
       </Router>
     </>

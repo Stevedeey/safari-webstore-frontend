@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import productApis from "../apis/ProductApi";
 import { monetize } from "../utilities/helperFunction";
+import jwt_decode from "jwt-decode";
+import { getTokenn } from "../utilities/TokenStorageUtils";
+import OrderApi from "../apis/OrderApi";
+import { Link } from "react-router-dom";
+import dateDelivered from "../utilities/customHook";
 
 import {
   Grid,
@@ -11,6 +16,7 @@ import {
   Form,
 } from "semantic-ui-react";
 import "../styles/Components/_checkout_layout.scss";
+import { getToken } from "../utilities/TokenStorageUtils";
 
 const state = [
   { key: "Edo", text: "Edo", value: "Edo" },
@@ -26,9 +32,44 @@ const city = [
 
 function CheckOutLayout() {
   const [cart, setCart] = useState([]);
+
   const [totalCartPrice, setTotalCartPrice] = useState(0);
+
   const [deliveryFee, setDeliveryFee] = useState(0);
+
   const [payOnDelivery, setPayOnDelivery] = useState(false);
+
+  const [isGift, setIsgift] = useState(false);
+
+  const [giftButtonText, setGiftButtonText] = useState("No");
+
+  const [arrayOfId, setArrayOfIds] = useState([]);
+
+  const [paymentType, setPaymentType] = useState("");
+
+  const [defaultShippingAddress, setDefaultShippingAddress] = useState(false);
+
+  //CLASSNAME initialization
+  const giftActiveClass = isGift ? "gift-yes " : "gift-no";
+
+  //CALCULATION **************************************
+  let cardPercentage = totalCartPrice * 0.05;
+  let total = totalCartPrice - cardPercentage + deliveryFee;
+  //CALCULATION **************************************
+
+  // handling states for selection
+  const [stateLocation, setStateLocation] = useState("");
+  const [province, setProvince] = useState("");
+
+  //initializing data **************************************
+  const intitialState = {
+    email: "",
+    fullName: "",
+    address: "",
+    phoneNumber: "",
+  };
+  const [formData, setFormData] = useState(intitialState);
+  //initializing data **************************************
 
   useEffect(async () => {
     const cartItem = await productApis.getCartItem();
@@ -39,7 +80,20 @@ function CheckOutLayout() {
       ? cartItem[cartItem.length - 1].total
       : 0;
     setTotalCartPrice(totalPrice);
+
+    const arrayIds = cartItem.map((each) => each.id);
+
+    //set arrayIds
+
+    setArrayOfIds(arrayIds);
   }, []);
+
+  const handleOnChangeOnShippingAddress = (evt, data) => {
+    let checked = data.checked;
+    checked
+      ? setDefaultShippingAddress(true)
+      : setDefaultShippingAddress(false);
+  };
 
   const incrementQuality = (product) => {
     const exist = cart.find(
@@ -87,17 +141,95 @@ function CheckOutLayout() {
     if (e.target.value === "delivery") {
       setPayOnDelivery(true);
       setDeliveryFee(2000);
+      setPaymentType("Pay on delivery");
     } else {
       setPayOnDelivery(false);
       setDeliveryFee(0);
+      setPaymentType("Pay with card");
     }
   };
 
-  let cardPercentage = totalCartPrice * 0.05;
-  let total = totalCartPrice - cardPercentage + deliveryFee;
-  console.log(cart);
+  //ISGIFT BUTTON **************************************
+  const handleClick = () => {
+    giftButtonText === "Yes"
+      ? setGiftButtonText("No")
+        ? setIsgift(true)
+        : setIsgift(false)
+      : setGiftButtonText("Yes")
+      ? setIsgift(false)
+      : setIsgift(true);
+  };
+  //ISGIFT BUTTON **************************************
 
-  //fetching orders
+  /**  Handling form submission
+   *
+   * ***/
+
+  const handleOnchange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleOnSubmit = async (event) => {
+    event.preventDefault();
+    console.log(arrayOfId);
+    const idArray = [];
+    for (let i = 0; i < arrayOfId.length; i++) {
+      idArray.push(arrayOfId[i]);
+    }
+
+    const clearFields = () => {
+      setDeliveryFee(0);
+      setTotalCartPrice(0);
+      setDeliveryFee(0);
+      setPayOnDelivery(false);
+      setGiftButtonText("No");
+      setArrayOfIds([]);
+      setPaymentType("");
+      setDefaultShippingAddress(false);
+      formData.email = "";
+      formData.fullName = "";
+      formData.phoneNumber = "";
+      formData.address = "";
+    };
+
+    const data = {
+      cardDiscount: cardPercentage,
+      cartItemIds: idArray,
+      costOfProducts: totalCartPrice,
+      dateOrdered: dateDelivered(),
+      dateDelivered: "null",
+      deliveryFee: deliveryFee,
+      deliveryMethod: "null",
+      isGift: isGift,
+      paymentType: paymentType,
+      price: 0,
+      quantity: "string",
+      shippingAddress: {
+        address: formData.address,
+        city: province,
+        email: formData.email,
+        fullName: formData.fullName,
+        isDefaultShippingAddress: defaultShippingAddress,
+        phone: formData.phoneNumber,
+        state: stateLocation,
+      },
+      status: "PENDING",
+      totalCost: total,
+    };
+    console.log("data", data);
+
+    const result = await OrderApi.placeUserOrders(data);
+    console.log("Result", result);
+
+    //save orderId in the localstorage
+    localStorage.setItem("order", JSON.stringify(result));
+
+    //redirect to new page
+    window.location.href = "/confirm-order/" + result.data.orderId;
+  };
 
   return (
     <Container fluid className="checkout-container">
@@ -122,32 +254,68 @@ function CheckOutLayout() {
                 <h4 className="">Shipping Address</h4>
               </Grid.Column>
             </Grid>
+
             <Form>
               <Form.Field>
                 <label>Email</label>
-                <input />
+                <input name="email" onChange={handleOnchange} />
               </Form.Field>
+
               <Form.Field>
                 <label>Full Name</label>
-                <input />
+                <input name="fullName" onChange={handleOnchange} />
               </Form.Field>
-              <Form.TextArea label="Address" />
-              <Form.Select fluid label="State/Province" options={state} />
-              <Form.Select fluid label="State" options={city} />
+
+              <Form.TextArea
+                label="Address"
+                name="address"
+                onChange={handleOnchange}
+              />
+              <Form.Select
+                fluid
+                label="State/Province"
+                name="province"
+                onChange={(e) => {
+                  setProvince(e.target.firstChild.innerText);
+                }}
+                options={state}
+              />
+
+              <Form.Select
+                fluid
+                label="State"
+                name="state"
+                onChange={(e) => {
+                  setStateLocation(e.target.firstChild.innerText);
+                }}
+                options={city}
+              />
+
               <Form.Field>
                 <label>Phone Number</label>
-                <input />
+                <input name="phoneNumber" onChange={handleOnchange} />
               </Form.Field>
               <Form.Field>
-                <Checkbox
+                {/* <Checkbox
                   className="checkout-checkbox"
                   label="Set Default Shipping Address"
+                  onChange={(e, data) => handleOnChangeOnShippingAddress}
+                /> */}
+
+                <Checkbox
+                  toggle
+                  label="Set as Default Shipping Address"
+                  onClick={(evt, data) =>
+                    handleOnChangeOnShippingAddress(evt, data)
+                  }
                 />
               </Form.Field>
             </Form>
           </Segment>
         </Grid.Column>
+
         {/* Midle Column starts */}
+
         <Grid.Column
           mobile={16}
           tablet={8}
@@ -237,6 +405,7 @@ function CheckOutLayout() {
         >
           <Segment>
             <h4 className="order-summary">ORDER SUMMARY</h4>
+
             {cart.map((product) => (
               <Grid key={product.productId}>
                 <Grid.Column width={5}>
@@ -284,7 +453,7 @@ function CheckOutLayout() {
               <Grid.Column width={8}>
                 <Container textAlign="right">
                   <p>₦ {monetize(totalCartPrice)}</p>
-                  <p>- ₦ {monetize(cardPercentage)}</p>
+                  <p>- ₦ {monetize(cardPercentage.toFixed(2))}</p>
                   <p>{deliveryFee}</p>
                 </Container>
               </Grid.Column>
@@ -309,17 +478,23 @@ function CheckOutLayout() {
             </Grid.Column>
             <Grid.Column width={8}>
               <span>
-                <button className="gift-yes">Yes</button>
+                <button
+                  className={giftActiveClass}
+                  value="yes"
+                  onClick={handleClick}
+                >
+                  {giftButtonText}
+                </button>
               </span>{" "}
-              <span>
-                <button className="gift-no">No</button>
-              </span>
             </Grid.Column>
             <p className="gift-package">
               A complimentary gift receipt will be included in the package, and
               prices will be hidden on the receipt.
             </p>
-            <button className="place-order">PLACE ORDER </button>
+
+            <button onClick={handleOnSubmit} className="place-order">
+              PLACE ORDER{" "}
+            </button>
           </Grid>
         </Grid.Column>
       </Grid>
