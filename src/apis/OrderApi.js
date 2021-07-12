@@ -4,9 +4,9 @@ import setHeader from '../utilities/Header';
 
 const OrderApi = {
 
-    getOrderByUser: async () => {
+    getOrdersByUser: async () => {
       const { data: userOrders } = await axios.get(
-        `${BaseUrl}/orders/user`, 
+        `${BaseUrl}/api/orders/user`, 
        setHeader()
       );
       
@@ -16,7 +16,7 @@ const OrderApi = {
     adminGetAllOrders: async () => {
 
         const { data: allOrders } = await axios.get(
-          `${BaseUrl}/orders/admin`,
+          `${BaseUrl}/api/orders/admin`,
           setHeader()
         );
         
