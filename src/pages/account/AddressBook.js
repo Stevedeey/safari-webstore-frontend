@@ -27,7 +27,7 @@ const AddressBook = (props) => {
     city: '',
     state: '',
     phone: '',
-    isDefaultShippingAddress: ''
+    isDefaultShippingAddress: false
   });
   const [alertBox, setAlertBox] = useState({state:false, message:'',type:'error'});
   
@@ -45,7 +45,7 @@ const AddressBook = (props) => {
 
   const handleSubmit = (e) => {
     AddressApi.addAddress(e, fields, setAlertBox);
-    setFields({address: '',city:'',state:'',phone:'',isDefaultShippingAddress:''});
+    setFields({address: '', city: '', state: '', phone: '', isDefaultShippingAddress: false});
   };
 
   const [state, dispatch] = React.useReducer(addressReducer, {
@@ -56,16 +56,20 @@ const AddressBook = (props) => {
   const { open, dimmer, size } = state
 
   useEffect(() => {
-
     (async()=>{
       const defaultAddress = await AddressApi.getUserDefaultAddress();    
       setDefaultAddress(defaultAddress);
       setUserAddress(defaultAddress.user);
-      const allAddresses = await AddressApi.getAllUserAddresses();
-      const addressesExceptDefault = allAddresses.filter(address => address.id !== defaultAddress.id);
-      setAddresses(addressesExceptDefault);
     })();
    }, [])
+
+   useEffect(() => {
+    (async()=>{
+      const allAddresses = await AddressApi.getAllUserAddresses();
+      const addressesExceptDefault = defaultAddress !== null && defaultAddress.length !== 0 ? allAddresses.filter(address => address.id !== defaultAddress.id) : allAddresses;
+      setAddresses(addressesExceptDefault);
+    })();
+   })
 
   return (
      <DashboardLayout>
