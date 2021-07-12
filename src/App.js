@@ -9,8 +9,8 @@ import SignInSignUp from "./pages/SignInSignUpPage";
 import TermsConditions from "./pages/TermsConditionsPage";
 import Clothes from "./pages/categories/Clothes";
 import Checkout from "./pages/CheckoutPage";
-// import Shoes from './pages/categories/ShoesPage'
-// import Accessories from './pages/categories/AccessoriesPage'
+import Shoes from './pages/categories/Shoes';
+import Accessories from "./pages/categories/Accessories";
 import AccountInfo from "./pages/account/Account";
 import AccountAddressBook from "./pages/account/AddressBook";
 import AccountMyOrders from "./pages/account/MyOrders";
@@ -23,6 +23,7 @@ import ProductItemLayout from "./components/ProductItemLayout";
 import SearchPage from "./pages/SearchPage";
 import FavouritesPage from "./pages/FavouritesPage";
 import ConfirmOrderPage from "./pages/ConfirmOrderPage";
+import { CartProvider } from "./utilities/CartContext";
 
 function App() {
   return (
@@ -54,6 +55,36 @@ function App() {
           <Route path="/checkout" component={Checkout} />
           <Route path="/confirm-order/:orderId" component={ConfirmOrderPage} />
         </Switch>
+        <CartProvider>
+          <Navbar />
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
+            <Route path="/terms-conditions" component={TermsConditions} />
+            <Route path="/cart" component={Cart} />
+            <Route path="/signin-signup" component={SignInSignUp} />
+            <Route path="/categories/clothes/" component={Clothes} />
+            <Route path="/categories/shoes" component={Shoes} />
+            <Route path="/categories/accessories" component={Accessories} />
+            <Route path="/account/information" component={AccountInfo} />
+            <Route path="/account/addressbook" component={AccountAddressBook} />
+            <Route path="/account/myorders" component={AccountMyOrders} />
+            <Route
+              path="/account/myfavourites"
+              component={AccountMyFavourites}
+            />
+            <Route path="/admin/dashboard" component={AdminDashboard} />
+            <Route path="/favourites" component={FavouritesPage} />
+            <Route path="/admin/orders" component={AdminOrders} />
+            <Route path="/admin/products" component={AdminProducts} />
+            <Route path="/search?keyword=data" component={SearchPage} />
+            <Route path="/product/:id" component={ProductPage} />
+            <Route path="/product" component={ProductPage} />
+            <Route path="/search" component={SearchPage} />
+            <Route path="/checkout" component={Checkout} />
+          </Switch>
+        </CartProvider>
       </Router>
     </>
   );

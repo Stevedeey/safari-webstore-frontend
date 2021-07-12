@@ -12,15 +12,15 @@ const OrderApi = {
     return userOrders;
   },
 
-  adminGetOrderByStatus: async () => {
-    const { data: ordersByStatus } = await axios.get(
-      `${BaseUrl}/orders/admin/status`,
+  adminGetAllOrders: async () => {
+    const { data: allOrders } = await axios.get(
+      `${BaseUrl}/orders/admin`,
       setHeader()
     );
 
-    return ordersByStatus;
+    return allOrders;
   },
-
+  
   placeUserOrders: async (data) => {
     console.log(setHeader());
     return await axios.post(`${BaseUrl}/check-out`, data, setHeader());
