@@ -16,8 +16,6 @@ function HomePage() {
 
         const allProducts = await ProductApi.getAllProducts();
 
-        console.log(allProducts)
-
         if(mounted) setProducts(allProducts.content);
 
         return () => mounted = false;
