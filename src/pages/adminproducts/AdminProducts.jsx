@@ -12,7 +12,11 @@ import * as yup from 'yup';
 import {colors} from '../../data/colors';
 import {sizes} from "../../data/sizes";
 import Axios from 'axios';
+
 import Alert from '../../components/Alert';
+
+import {config} from '../../services/baseUrl';
+
 
 
 const schema = yup.object().shape({
@@ -23,7 +27,11 @@ const schema = yup.object().shape({
 
 const token = localStorage.getItem('token');
 
+
 const AdminProducts = () => {
+
+const {baseURL} = config;
+const AdminProducts = (props) => {
 
 
   const {
@@ -119,7 +127,11 @@ const AdminProducts = () => {
         }
 
         Axios.post(
+
            "http://localhost:8045/api/admin/add-product",
+
+           baseURL + "/admin/add-product",
+
            productRequest, {
              headers: {
                Authorization: `Bearer ${token}`,

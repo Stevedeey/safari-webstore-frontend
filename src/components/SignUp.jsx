@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {doRegistration} from '../services/auth-service';
 import {CheckBox, InputField, Label} from './form-fields';
 import Alert from "./Alert";
+import { UserContext } from '../context/UserContext';
 
 const SignUp = () => {
     const [fields, setFields] = useState({
@@ -12,6 +13,7 @@ const SignUp = () => {
         confirmPassword: '',
         newsletter: ''
     });
+    const{login} = useContext(UserContext)
     const [alertBox, setAlertBox] = useState({state:false, message:'',type:'error'});
     const [disabledButton, setDisabledButton] = useState('');
 
@@ -29,7 +31,7 @@ const SignUp = () => {
     return <section className='sign-up'>
         <h5 className='form-title'>CREATE ACCOUNT</h5>
         {alertBox.state && <Alert text={alertBox.message} variant={alertBox.type}/>}
-        <form method='POST' onSubmit={(e) => doRegistration(e, fields, setDisabledButton, setAlertBox)}>
+        <form method='POST' onSubmit={(e) => doRegistration(e, fields, setDisabledButton, setAlertBox, login)}>
             <Label elementId='first-name' text='first name'/>
             <InputField
                 type='text'

@@ -8,7 +8,7 @@ function Navbar() {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
   const currentItemInCart = useCart();
-
+  const userNavLink = localStorage.getItem('token') !== null ? '/account/information': '/signin-signup' ;
   const search = async (e) => {
     if (e.key === "Enter")
       window.location.href = `/search?keyword=${e.target.value}`;
@@ -69,7 +69,7 @@ function Navbar() {
                 to="/sign-up"
                 className="nav-links-mobile"
                 onClick={closeMobileMenu}
-                // to='/dashboard'
+                to={userNavLink}
                 // className='nav-links-mobile'
               >
                 Account
@@ -98,7 +98,7 @@ function Navbar() {
             <li className="nav-item">
               <NavLink
                 activeClassName="active-icon"
-                to="/signin-signup"
+                to={userNavLink}
                 className="nav-links"
               >
                 <i class="fas fa-user"></i>

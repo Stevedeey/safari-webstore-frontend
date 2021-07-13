@@ -13,14 +13,25 @@ const productApis = {
     const { data: products } = response;
 
     console.log("inside the GETALLPRODUCTS function", response);
-
+    console.log("==========>", products);
     return products;
   },
 
   getProductById: async (id) => {
     const { data: product } = await axios.get(`${BaseUrl}/products/${id}`);
-
+  console.log(product);
     return product;
+  },
+
+  getFavorites: async ()=>{
+    // let favorites = null;
+    console.log("in get favourites", setHeader())
+    try{
+    const favourites = await axios.get(`http://localhost:8045/api/customer/favourite/products`, setHeader());
+    return favourites;
+    }catch(error){
+      console.log(error);
+    }
   },
 
   getAllProducts: async () => {
