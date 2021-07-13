@@ -23,6 +23,8 @@ import FavouritesPage from "../pages/FavouritesPage";
 import ConfirmOrderPage from "../pages/ConfirmOrderPage";
 import ProtectedRoute from "./ProtectedRoute";
 
+
+
 const Routes = ()=>(
     <Switch>
     <Route path="/" exact component={Home} />
@@ -46,6 +48,7 @@ const Routes = ()=>(
     <ProtectedRoute path="/admin/orders" component={AdminOrders} />
     <ProtectedRoute path="/admin/products" component={AdminProducts} />
     <Route path="/search?keyword=data" component={SearchPage} />
+    <Route path="/confirm-order" component={ConfirmOrderPage} />
     <Route path="/product/:id" component={ProductPage} />
     <Route path="/product" component={ProductPage} />
     <Route path="/search" component={SearchPage} />

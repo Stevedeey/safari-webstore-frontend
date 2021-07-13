@@ -33,7 +33,7 @@ const OrderApi = {
 
   placeUserOrders: async (data) => {
     console.log(setHeader());
-    return await axios.post(`${BaseUrl}/check-out`, data, setHeader());
+    return await axios.post(`${BaseUrl}/api/check-out`, data, setHeader());
   },
 
   placePaymentOrder: async (data) => {
