@@ -12,6 +12,7 @@ import * as yup from 'yup';
 import {colors} from '../../data/colors';
 import {sizes} from "../../data/sizes";
 import Axios from 'axios';
+import Alert from '../../components/Alert';
 
 
 const schema = yup.object().shape({
@@ -22,7 +23,8 @@ const schema = yup.object().shape({
 
 const token = localStorage.getItem('token');
 
-const AdminProducts = (props) => {
+const AdminProducts = () => {
+
 
   const {
     register,
@@ -31,7 +33,7 @@ const AdminProducts = (props) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
+  const [alertBox, setAlertBox] = useState({state: false, message: 'Product Added Successfully!', type: 'success'});
   const [selectedImages, setSelectedImages] = useState([]);
   const [imagesToUpload, setImagesToUpload] = useState([]);
   const [uploadedImagesUrl, setUploadedImagesUrl] = useState([]);
@@ -46,11 +48,9 @@ const AdminProducts = (props) => {
   const handleImageChange = (e) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
-
       const imagesArray = Array.from(e.target.files).map((file) => file);
 
       setImagesToUpload((prevImages) => prevImages.concat(imagesArray));
-
       setSelectedImages((prevImages) => prevImages.concat(filesArray));
       Array.from(e.target.files).map(
          (file) => URL.revokeObjectURL(file) // avoid memory leak
@@ -58,17 +58,13 @@ const AdminProducts = (props) => {
     }
   };
 
+
   const renderPhotos = (source) => {
-    // console.log('source: ', source);
     return source.map((photo) => {
       return <img className="product-image"
-                  src={
-                    photo
-                  }
+                  src={photo}
                   alt=""
-                  key={
-                    photo
-                  }
+                  key={photo}
       />;
     });
   };
@@ -92,13 +88,10 @@ const AdminProducts = (props) => {
     content.forEach(data => {
       newContent.push(data.value);
     })
-
     return newContent;
   }
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-
+  const submitHandler = () => {
     imagesToUpload.map((image) => {
       const formData = new FormData();
       formData.append("file", image)
@@ -108,6 +101,7 @@ const AdminProducts = (props) => {
          "https://api.cloudinary.com/v1_1/dmtkcdiya/image/upload",
          formData
       ).then((response) => {
+        setAlertBox({state: true});
         console.log(response);
         imagesArray.push(response.data.secure_url);
 
@@ -124,161 +118,145 @@ const AdminProducts = (props) => {
           productImages: imagesArray
         }
 
-        console.log(productRequest);
-
         Axios.post(
-           "https://safariwebstoreapp.herokuapp.com/api/admin/add-product",
+           "http://localhost:8045/api/admin/add-product",
            productRequest, {
              headers: {
                Authorization: `Bearer ${token}`,
                "content-type": "application/json",
              }
-           }).then((response) => {
-          console.log("Product Upload Response: ", response);
-        });
+           })
       });
 
     });
   };
 
-  // console.log('UploadedImages: ', uploadedImagesUrl);
 
   return (
-  <>
-  <AdminLayout>
-       <form onSubmit={submitHandler}>
-         <div className="product-wrapper">
-           <h1 className="title"> Products </h1>
-           <div className="product-list-wrapper">
-             <h3 className="info-title"> Add Products </h3>
-
-             <div className="product-details-wrapper">
-
-               <div className="product-details">
-
-                 <div className="name-price">
-                   <div>
-                     <h4> Title: </h4>
-                     <input name="name"
-                            type="text"
-                            placeholder="Title of Product"
-                            onChange={(event) => setName(event.target.value)}/>
-                   </div>
-                   <div>
-                     <h4> Price: </h4>
-                     <input name="price"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            required pattern="^\d+(?:\.\d{1,2})?$"
-                            placeholder="Price of Product"
-                            onChange={
-                              (event) => setPrice(event.target.value)
-                            }
-                     /></div>
-                 </div>
-
-                 <div>
-                   <h4> Add Image(s): </h4>
-                   <input name="image"
-                          type="file"
-                          id="file"
-                          multiple onChange={
-                     handleImageChange
-                   }/>
-                   <div className="product-image-wrapper">
-                     <div className="label-holder">
-                       <label htmlFor="file"
-                              className="label">
-                         <i className="material-icons"> add_a_photo </i>
-                       </label>
+     <>
+       <AdminLayout>
+         {alertBox.state && <Alert text={alertBox.message} variant={alertBox.type}/>}
+         <form onSubmit={submitHandler}>
+           <div className="product-wrapper">
+             <h1 className="title"> Products </h1>
+             <div className="product-list-wrapper">
+               <h3 className="info-title"> Add Products </h3>
+               <div className="product-details-wrapper">
+                 <div className="product-details">
+                   <div className="name-price">
+                     <div>
+                       <h4> Title: </h4>
+                       <input name="name"
+                              type="text"
+                              placeholder="Title of Product"
+                              onChange={(event) => setName(event.target.value)}
+                       />
                      </div>
-                     <div className="result"> {renderPhotos(selectedImages)}
+                     <div>
+                       <h4> Price: </h4>
+                       <input name="price"
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              required pattern="^\d+(?:\.\d{1,2})?$"
+                              placeholder="Price of Product"
+                              onChange={(event) => setPrice(event.target.value)}
+                       />
+                     </div>
+                   </div>
+
+                   <div>
+                     <h4> Add Image(s): </h4>
+                     <input name="image"
+                            type="file"
+                            id="file"
+                            multiple onChange={handleImageChange}
+                     />
+                     <div className="product-image-wrapper">
+                       <div className="label-holder">
+                         <label htmlFor="file"
+                                className="label">
+                           <i className="material-icons"> add_a_photo </i>
+                         </label>
+                       </div>
+                       <div className="result"> {renderPhotos(selectedImages)}
+                       </div>
                      </div>
                    </div>
                  </div>
 
-
+                 <div className="description-details">
+                   <label>
+                     <h4> Description: </h4>
+                     <textarea name="description"
+                               placeholder="Please Enter A Description"
+                               className="description"
+                               onChange={(e) => setDescription(e.target.value)}
+                     />
+                   </label>
+                 </div>
                </div>
 
-               <div className="description-details">
-                 <label>
-                   <h4> Description: </h4> <textarea name="description"
-                                                     placeholder="Please Enter A Description"
-                                                     className="description"
-                                                     onChange={
-                                                       (e) => setDescription(e.target.value)
-                                                     }
-                 /> </label></div>
-             </div>
+               <div className="category-main-wrapper">
+                 <div className="category-wrapper">
+                   <h4> Category: </h4>
+                   <Select name="category"
+                           components={makeAnimated()}
+                           theme={customTheme}
+                           isMulti isSearchable options={categories}
+                           placeholder="Select a category"
+                           noOptionsMessage={() => "No matching category found!"}
+                           onChange={setCategory}
+                   />
+                 </div>
 
-             <div className="category-main-wrapper">
-
-               <div className="category-wrapper">
-                 <h4> Category: </h4> <Select name="category"
-                                              components={
-                                                makeAnimated()
-                                              }
-                                              theme={customTheme
-                                              }
-                                              isMulti isSearchable options={
-                 categories
-               }
-                                              placeholder="Select a category"
-                                              noOptionsMessage={
-                                                () => "No matching category found!"
-                                              }
-                                              onChange={
-                                                setCategory
-                                              }
-               /></div>
-
-               <div className="category-wrapper">
-                 <h4> Sub - Category: </h4> <Select name="sub-category"
-                                                    components={
-                                                      makeAnimated()
-                                                    }
-                                                    theme={customTheme}
-                                                    isMulti isSearchable options={subCategories}
-                                                    placeholder="Select a sub-category"
-                                                    noOptionsMessage={() => "No matching sub-category found!"}
-                                                    onChange={setSubCategory}
-               /></div>
-             </div>
-             <div className="category-main-wrapper">
-
-               <div className="category-wrapper">
-                 <h4> Color: </h4> <Select name="color"
-                                           components={makeAnimated()}
-                                           onChange={setColor}
-                                           theme={customTheme}
-                                           isMulti isSearchable options={colors}
-                                           placeholder="Select colors"
-                                           noOptionsMessage={() => "No matching color found!"}/>
+                 <div className="category-wrapper">
+                   <h4> Sub - Category: </h4>
+                   <Select name="sub-category"
+                           components={makeAnimated()}
+                           theme={customTheme}
+                           isMulti isSearchable options={subCategories}
+                           placeholder="Select a sub-category"
+                           noOptionsMessage={() => "No matching sub-category found!"}
+                           onChange={setSubCategory}
+                   />
+                 </div>
                </div>
+               <div className="category-main-wrapper">
 
-               <div className="category-wrapper">
-                 <h4> Size: </h4>
-                 <Select name="size"
-                         components={makeAnimated()}
-                         onChange={setSize}
-                         theme={customTheme}
-                         isMulti isSearchable options={sizes}
-                         placeholder="Select sizes"
-                         noOptionsMessage={
-                           () => "No matching size found!"
-                         }/>
+                 <div className="category-wrapper">
+                   <h4> Color: </h4>
+                   <Select name="color"
+                           components={makeAnimated()}
+                           onChange={setColor}
+                           theme={customTheme}
+                           isMulti isSearchable options={colors}
+                           placeholder="Select colors"
+                           noOptionsMessage={() => "No matching color found!"}
+                   />
+                 </div>
+
+                 <div className="category-wrapper">
+                   <h4> Size: </h4>
+                   <Select name="size"
+                           components={makeAnimated()}
+                           onChange={setSize}
+                           theme={customTheme}
+                           isMulti isSearchable options={sizes}
+                           placeholder="Select sizes"
+                           noOptionsMessage={() => "No matching size found!"}
+                   />
+                 </div>
                </div>
              </div>
            </div>
-         </div>
-         <input type="submit"
-                id="submit"
-                value="Add Product"
-                className="add-product-btn"/>
-       </form>
-     </AdminLayout>
-     <Footer />
+           <input type="submit"
+                  id="submit"
+                  value="Add Product"
+                  className="add-product-btn"/>
+         </form>
+       </AdminLayout>
+       <Footer/>
      </>
   );
 }
