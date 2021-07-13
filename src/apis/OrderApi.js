@@ -23,7 +23,7 @@ const OrderApi = {
   adminGetAllOrders: async () => {
 
         const { data: allOrders } = await axios.get(
-          `${BaseUrl}/api/orders/admin`,
+          `${BaseUrl}/orders/admin`,
           setHeader()
         );
         

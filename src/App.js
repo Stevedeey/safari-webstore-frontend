@@ -12,7 +12,7 @@ import Checkout from "./pages/CheckoutPage";
 import Shoes from './pages/categories/Shoes';
 import Accessories from "./pages/categories/Accessories";
 import AccountInfo from "./pages/account/Account";
-import AccountAddressBook from "./pages/account/AddressBook";
+import AccountAddressBook from "./pages/account/addressbook/AddressBook";
 import AccountMyOrders from "./pages/account/MyOrders";
 import AccountMyFavourites from "./pages/account/MyFavourites";
 import AdminDashboard from "./pages/admindashboard/AdminDashboard";
