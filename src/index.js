@@ -3,9 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import 'semantic-ui-css/semantic.min.css'
 import reportWebVitals from './reportWebVitals';
+import {UserContextProvider} from './context/UserContext';
+
 
 ReactDOM.render(
-    <App />,
+  <UserContextProvider>
+    <App />
+  </UserContextProvider>,
   document.getElementById('root')
 );
 

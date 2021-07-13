@@ -1,8 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import "./SideBar.css";
 import "../../styles/Components/_button.scss";
+import { UserContext } from "../../context/UserContext";
 const SideBar = ({ menuItems }) => {
+  const userCtx = useContext(UserContext);
+  
   return (
     // <div>
     <div className="sidebar-wrapper">
@@ -27,7 +30,7 @@ const SideBar = ({ menuItems }) => {
           </NavLink>
         ))}
       </div>
-      <button className="sign-out-button">
+      <button className="sign-out-button" onClick = {userCtx.doLogout}>
         <span className="sign-out-icon">
           <img src="../images/sign-out-icon.svg" alt="sign-out-icon" />
         </span>
