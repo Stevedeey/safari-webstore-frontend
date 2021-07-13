@@ -5,7 +5,7 @@ import Home from "./pages/HomePage";
 import About from "./pages/AboutPage";
 import Contact from "./pages/ContactPage";
 import Cart from "./pages/CartPage";
-import SignInSignUp from "./pages/SignInSignUpPage";
+import SignInSignUp from "./pages/SignInSignUp";
 import TermsConditions from "./pages/TermsConditionsPage";
 import Clothes from "./pages/categories/Clothes";
 import Checkout from "./pages/CheckoutPage";
@@ -24,11 +24,20 @@ import SearchPage from "./pages/SearchPage";
 import FavouritesPage from "./pages/FavouritesPage";
 import ConfirmOrderPage from "./pages/ConfirmOrderPage";
 import { CartProvider } from "./utilities/CartContext";
+import React from 'react';
+import {UserContext} from './context/UserContext';
+import ProtectedRoute from "./components/ProtectedRoute";
+
 
 function App() {
+  const userCtx = React.useContext(UserContext);
+  
+  React.useEffect(()=>{
+    userCtx.autoLogin();
+  }, [])
   return (
     <>
-      <Router>
+      <Router> 
         <CartProvider>
           <Navbar />
           <Switch>
@@ -41,7 +50,8 @@ function App() {
             <Route path="/categories/clothes/" component={Clothes} />
             <Route path="/categories/shoes" component={Shoes} />
             <Route path="/categories/accessories" component={Accessories} />
-            <Route path="/account/information" component={AccountInfo} />
+            <ProtectedRoute path="/account/information" component={AccountInfo} />
+            {/* <Route path="/account/information" component={AccountInfo} /> */}
             <Route path="/account/addressbook" component={AccountAddressBook} />
             <Route path="/account/myorders" component={AccountMyOrders} />
             <Route

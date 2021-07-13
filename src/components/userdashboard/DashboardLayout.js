@@ -40,9 +40,9 @@ const DashboardLayout = ({ children }) => {
      <div className="dashboard-wrapper">
        
        <SideBar menuItems={menu} />
-       <div>
+       {/* <div> */}
          { children }
-       </div>
+       {/* </div> */}
        
      </div>
      <br /><br />
