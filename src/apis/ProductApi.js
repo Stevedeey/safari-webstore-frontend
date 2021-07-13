@@ -13,13 +13,13 @@ const productApis = {
     const { data: products } = response;
 
     console.log("inside the GETALLPRODUCTS function", response);
-
+    console.log("==========>", products);
     return products;
   },
 
   getProductById: async (id) => {
     const { data: product } = await axios.get(`${BaseUrl}/products/${id}`);
-
+  console.log(product);
     return product;
   },
 
