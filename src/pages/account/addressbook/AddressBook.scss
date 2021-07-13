@@ -69,6 +69,18 @@
     .shell-wrapper {
         width: 600px;
         height: auto;
+        margin: 3rem;
+    }
+    .btn-address {
+        margin: 3rem;
+    }
+    
+    .pagination {
+        margin: 3rem;
+    }
+
+    .title {
+        margin: 3rem;
     }
 }
 
@@ -76,6 +88,7 @@
     .shell-wrapper {
         width: 480px;
         height: auto;
+        margin: 3rem;
     }
 }
 
@@ -84,7 +97,7 @@
         width: 300px;
         height: auto;
         padding: 2.5rem;
-        margin-top: 1.5rem;
+        margin: 3rem;
         box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
