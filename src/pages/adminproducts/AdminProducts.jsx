@@ -12,8 +12,7 @@ import * as yup from 'yup';
 import {colors} from '../../data/colors';
 import {sizes} from "../../data/sizes";
 import Axios from 'axios';
-import {config} from '../../services/baseUrl';
-
+import BaseUrl from '../../apis/BaseUrl'
 
 
 const schema = yup.object().shape({
@@ -23,10 +22,7 @@ const schema = yup.object().shape({
 })
 
 const token = localStorage.getItem('token');
-
-  const {baseURL} = config;
   const AdminProducts = (props) => {
-
 
     const {
       register,
@@ -35,7 +31,6 @@ const token = localStorage.getItem('token');
     } = useForm({
       resolver: yupResolver(schema),
     });
-    const [alertBox, setAlertBox] = useState({state: false, message: 'Product Added Successfully!', type: 'success'});
     const [selectedImages, setSelectedImages] = useState([]);
     const [imagesToUpload, setImagesToUpload] = useState([]);
     const [uploadedImagesUrl, setUploadedImagesUrl] = useState([]);
@@ -93,7 +88,8 @@ const token = localStorage.getItem('token');
       return newContent;
     }
 
-    const submitHandler = () => {
+    const submitHandler = (event) => {
+      event.preventDefault();
       imagesToUpload.map((image) => {
         const formData = new FormData();
         formData.append("file", image)
@@ -103,7 +99,6 @@ const token = localStorage.getItem('token');
            "https://api.cloudinary.com/v1_1/dmtkcdiya/image/upload",
            formData
         ).then((response) => {
-          setAlertBox({state: true});
           console.log(response);
           imagesArray.push(response.data.secure_url);
 
@@ -119,18 +114,14 @@ const token = localStorage.getItem('token');
             colors: modifyContent(color),
             productImages: imagesArray
           }
-
           Axios.post(
-             "http://localhost:8045/api/admin/add-product",
-
-             baseURL + "/admin/add-product",
-
+             BaseUrl + "/api/admin/add-product",
              productRequest, {
                headers: {
                  Authorization: `Bearer ${token}`,
                  "content-type": "application/json",
                }
-             })
+             }).then(response => {console.log("Product response " + response)})
         });
 
       });
@@ -262,6 +253,5 @@ const token = localStorage.getItem('token');
          <Footer/>
        </>
     );
-  }
-
+}
 export default AdminProducts;
