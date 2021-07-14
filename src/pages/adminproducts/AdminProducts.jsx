@@ -23,7 +23,7 @@ const schema = yup.object().shape({
 })
 
 const token = localStorage.getItem('token');
-const AdminProducts = () => {
+
   const {baseURL} = config;
   const AdminProducts = (props) => {
 
@@ -263,5 +263,5 @@ const AdminProducts = () => {
        </>
     );
   }
-}
+
 export default AdminProducts;
