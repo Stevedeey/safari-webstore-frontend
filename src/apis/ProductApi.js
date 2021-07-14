@@ -3,18 +3,25 @@ import axios from "axios";
 import setHeader from "../utilities/Header";
 
 const token = localStorage.getItem("token");
-console.log(token);
+
 
 const productApis = {
   getAllProduct: async () => {
     const response = await axios.get(`${BaseUrl}/products`, {
-      headers: { Authorization: `Bearer ${token}` },
+      // headers: { Authorization: `Bearer ${token}` },
     });
     const { data: products } = response;
-
-    console.log("inside the GETALLPRODUCTS function", response);
-    console.log("==========>", products);
     return products;
+  },
+
+  getProductByCategory: async (category) => {
+    try{
+      const allProducts = await axios.get(`${BaseUrl}/products`);
+    const products = await allProducts.content;
+    return products.filter(product=>product.category[0].name === category);
+    }catch(error){
+        console.log(error);
+    }
   },
 
   getProductById: async (id) => {
@@ -27,7 +34,7 @@ const productApis = {
     // let favorites = null;
     console.log("in get favourites", setHeader())
     try{
-    const favourites = await axios.get(`http://localhost:8045/api/customer/favourite/products`, setHeader());
+    const favourites = await axios.get(`${BaseUrl}/api/customer/favourite/products`, setHeader());
     return favourites;
     }catch(error){
       console.log(error);
@@ -97,7 +104,7 @@ const productApis = {
   deleteProductFromCart: async function deleteFromCart(id) {
     try {
       const response = await fetch(
-        `http://localhost:8045/products/delete/${id}`,
+        `${BaseUrl}/products/delete/${id}`,
         {
           method: "DELETE",
           body: JSON.stringify({
@@ -121,7 +128,7 @@ const productApis = {
   addProductToFavorite: async function addToFavorite(id) {
     try {
       const response = await fetch(
-        `http://localhost:8045/api/customer/favorite/${id}`,
+        `${BaseUrl}/api/customer/favorite/${id}`,
         {
           method: "POST",
           body: JSON.stringify({

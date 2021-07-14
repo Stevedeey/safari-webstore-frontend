@@ -23,12 +23,13 @@ const ProductsLayout = (props) => {
 
   useEffect(async () => {
     const produc = await productApis.getAllProduct();
-
+    const category = "Accessories";
     const products = produc.content;
-    console.log("products", products);
+    const allAccessories = products.filter(product=>product.category[0].name === category)
+    console.log("products", allAccessories);
 
-    setLoadedAccessories(products);
-    setFilteredLoadedAccessories(products);
+    setLoadedAccessories(allAccessories);
+    setFilteredLoadedAccessories(allAccessories);
     console.log(loadedAccessories);
   }, []);
 
