@@ -17,11 +17,13 @@ function ShoesPage(props) {
           <ul className="cards__items clothes__items">
             {products ? (
               products.map((product, index) => {
+                console.log("ooooooooooo",product.productImages[0].image)
                 return (
+                
                   <CardProductItem
                     key={index}
                     id={product.id}
-                    src="/images/products/gustavo-spindula-l7wrlsKDmCE-unsplash 1.png"
+                    src={product.productImages[0].image}
                     price={product.price}
                     name={product.name}
                     favourtie={`/api/customer/favourite/${product.id}`}

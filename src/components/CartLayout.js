@@ -31,6 +31,7 @@ function CartLayout(props) {
         </Grid.Column>
       </Grid>
       {props.userCartItem.map((item) => {
+        console.log(item)
         return (
           <div className="cart-items">
             <Grid padded className="carts cart" key={item.id}>
