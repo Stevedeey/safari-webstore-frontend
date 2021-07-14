@@ -97,7 +97,7 @@ const AddressBook = (props) => {
                 <p> { defaultAddress.city }, { defaultAddress.state } </p>
                 <p> { defaultAddress.phone } </p>
                 <div className="self-shell">
-                  <a style={{color:"#ED165F"}} href="http://localhost:3000/account/addressbook#" onClick={() => {
+                  <a style={{color:"#ED165F"}} href="/account/addressbook#" onClick={() => {
                     setFields({fullName: defaultAddress.fullName,
                               email: defaultAddress.email,
                               address: defaultAddress.address,
@@ -108,7 +108,7 @@ const AddressBook = (props) => {
                               id: defaultAddress.id
                               })
                     dispatch({ type: 'OPEN_MODAL', dimmer: 'inverted', size: 'tiny', method: 'PUT' })}}>Edit</a>              
-                  <a style={{color:"#ED165F"}} href="http://localhost:3000/account/addressbook#" onClick={openConfirm}>Delete</a>
+                  <a style={{color:"#ED165F"}} href="/account/addressbook#" onClick={openConfirm}>Delete</a>
                   <Confirm
                       open={confirm.open}
                       onCancel={closeConfirm}
@@ -164,7 +164,7 @@ const AddressBook = (props) => {
                 <p> { address.city }, { address.state } </p>
                 <p> { address.phone } </p>
                 <div className="self-shell">
-                  <a style={{color:"#ED165F"}} href="http://localhost:3000/account/addressbook#" onClick={() =>{ 
+                  <a style={{color:"#ED165F"}} href="/account/addressbook#" onClick={() =>{ 
                     setFields({
                       fullName: address.fullName,
                       email: address.email,
@@ -176,7 +176,7 @@ const AddressBook = (props) => {
                       id: address.id
                       })
                     dispatch({ type: 'OPEN_MODAL', dimmer: 'inverted', size: 'tiny', method: 'PUT' })}}>Edit</a> 
-                  <a style={{color:"#ED165F"}} href="http://localhost:3000/account/addressbook#" onClick={openConfirm}>Delete</a>
+                  <a style={{color:"#ED165F"}} href="/account/addressbook#" onClick={openConfirm}>Delete</a>
                   <Confirm
                       open={confirm.open}
                       onCancel={closeConfirm}
