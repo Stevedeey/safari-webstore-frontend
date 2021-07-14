@@ -13,7 +13,7 @@ function CardProducts(props) {
         <div className="cards__wrapper">
           <ul className="cards__items">
             {props.products.map((product, index) => {
-         console.log("/////////////", product.productImages[0].image)
+         console.log("/////////////", product.productImages)
               const { id, name, price } = product;
               return (
                 <CardProductItem

@@ -21,7 +21,7 @@ function ClothesPage(props) {
                   <CardProductItem
                     key={index}
                     id={product.id}
-                    src="/images/products/gustavo-spindula-l7wrlsKDmCE-unsplash 1.png"
+                    src={product.productImages[0].image}
                     price={product.price}
                     name={product.name}
                     favourtie={`/api/customer/favourite/${product.id}`}

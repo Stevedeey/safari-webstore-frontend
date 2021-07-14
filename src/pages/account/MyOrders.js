@@ -110,7 +110,6 @@ const MyOrders = (props) => {
           </Segment>
         </DashboardLayout>
       </Container>
-      <Footer />
     </>
   );
 };

@@ -4,6 +4,7 @@ import AdminLayout from "../../components/adminlayout/AdminLayout";
 import AdminApi from '../../apis/AdminApi';
 import ProductApi from '../../apis/ProductApi';
 import OrderApi from '../../apis/OrderApi';
+import { InputField, Label } from '../../components/form-fields';
 
 
 const AdminDashboard = (props) => {

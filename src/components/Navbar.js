@@ -8,7 +8,9 @@ function Navbar() {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
   const currentItemInCart = useCart();
-  const userNavLink = localStorage.getItem('token') !== null ? '/account/information': '/signin-signup' ;
+  const userNavLink = localStorage.getItem('token') !== null ? 
+      (JSON.parse(localStorage.getItem('isLoggedIn'))).role === 'ADMIN' ?'/admin/dashboard': '/account/information'
+      : '/signin-signup' ;
   const search = async (e) => {
     if (e.key === "Enter")
       window.location.href = `/search?keyword=${e.target.value}`;

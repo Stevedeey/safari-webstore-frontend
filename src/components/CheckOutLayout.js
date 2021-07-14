@@ -96,6 +96,7 @@ function CheckOutLayout() {
   };
 
   const incrementQuality = (product) => {
+   
     const exist = cart.find(
       (eachProduct) => eachProduct.productId === product.productId
     );
@@ -407,9 +408,13 @@ function CheckOutLayout() {
             <h4 className="order-summary">ORDER SUMMARY</h4>
 
             {cart.map((product) => (
+              
+            
               <Grid key={product.productId}>
                 <Grid.Column width={5}>
+                  {console.log("llllllll",product)}
                   <img
+                  
                     src={product.productImage}
                     alt={product.productName}
                     className="order-section-img"

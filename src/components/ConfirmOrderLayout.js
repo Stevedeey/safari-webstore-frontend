@@ -95,6 +95,7 @@ function ConfirmOrderLayout() {
           <Segment>
             <h3>Your Order({orderedItems.length})</h3>
             {orderedItems.map((each) => {
+              {console.log("llllllll",each)}
               return (
                 <Grid className="order">
                   <Grid.Column width="5">

@@ -63,6 +63,8 @@ function CardProductItem(props) {
                 src={props.src}
                 alt="ProductPhoto"
                 className="cards_item_img"
+                width="297px"
+                height="457px"
               />
             </figure>
             <div className="cards__item__info">
