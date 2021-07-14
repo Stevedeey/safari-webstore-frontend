@@ -12,9 +12,6 @@ import * as yup from 'yup';
 import {colors} from '../../data/colors';
 import {sizes} from "../../data/sizes";
 import Axios from 'axios';
-
-import Alert from '../../components/Alert';
-
 import {config} from '../../services/baseUrl';
 
 
@@ -26,21 +23,18 @@ const schema = yup.object().shape({
 })
 
 const token = localStorage.getItem('token');
-
-
 const AdminProducts = () => {
+  const {baseURL} = config;
+  const AdminProducts = (props) => {
 
-const {baseURL} = config;
-const AdminProducts = (props) => {
 
-
-  const {
-    register,
-    handleSubmit,
-    errors
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+    const {
+      register,
+      handleSubmit,
+      errors
+    } = useForm({
+      resolver: yupResolver(schema),
+    });
   const [alertBox, setAlertBox] = useState({state: false, message: 'Product Added Successfully!', type: 'success'});
   const [selectedImages, setSelectedImages] = useState([]);
   const [imagesToUpload, setImagesToUpload] = useState([]);
@@ -147,7 +141,6 @@ const AdminProducts = (props) => {
   return (
      <>
        <AdminLayout>
-         {alertBox.state && <Alert text={alertBox.message} variant={alertBox.type}/>}
          <form onSubmit={submitHandler}>
            <div className="product-wrapper">
              <h1 className="title"> Products </h1>
