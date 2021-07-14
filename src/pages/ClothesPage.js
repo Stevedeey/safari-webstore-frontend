@@ -17,6 +17,7 @@ function ClothesPage(props) {
           <ul className="cards__items clothes__items">
             {products ? (
               products.map((product, index) => {
+                
                 return (
                   <CardProductItem
                     key={index}
