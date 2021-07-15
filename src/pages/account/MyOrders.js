@@ -36,7 +36,7 @@ const MyOrders = (props) => {
                           alt=""
                           className="order-image"
                         />
-                        <button className="order-status">Delivered</button>
+                        <button className="order-status">Pending</button>
                       </GridColumn>
                       <GridColumn mobile={8} tablet={8} computer={8}>
                         <p className="order-title">{order.orderedItems.productImage}</p>
