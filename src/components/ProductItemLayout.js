@@ -6,12 +6,14 @@ import {
   Dropdown,
   Container,
   GridColumn,
-  Menu,
+ Button
 } from "semantic-ui-react";
 import "../styles/Layout/_product_item_layout.scss";
 import "../styles/Components/_button.scss";
 import productApis from "../apis/ProductApi";
 import { useCartUpdate } from "../utilities/CartContext";
+import axios from 'axios';
+import BaseUrl from "../apis/BaseUrl";
 
 function ProductItemLayout(props) {
   const productId = props.productId;
@@ -24,6 +26,8 @@ function ProductItemLayout(props) {
   const [message, setMessage] = useState("");
   //use context for cart item on navigation bar
   const incrementCartItem = useCartUpdate();
+  const token = localStorage.getItem('token');
+
 
   useEffect(async () => {
     const productData = await productApis.getProductById(productId);
@@ -56,7 +60,7 @@ function ProductItemLayout(props) {
 
   //decrement quantity
   const decrementQuantity = () => {
-    if (quantity != 1) setQuantity((quantity) => quantity - 1);
+    if (quantity !== 1) setQuantity((quantity) => quantity - 1);
   };
 
   //add products to cart
@@ -68,8 +72,8 @@ function ProductItemLayout(props) {
       price: product.price,
       name: product.name,
       description: product.description,
-      size: size == "Select Size" ? null : size,
-      color: color == "Select Color" ? null : color,
+      size: size === "Select Size" ? null : size,
+      color: color === "Select Color" ? null : color,
       productImage: product.length ? props.productImage[0] : "",
     };
 
@@ -98,6 +102,22 @@ function ProductItemLayout(props) {
 
     setColor(textField);
   };
+
+  const addToFavorites = async ()=>{
+   const endPoint = BaseUrl +  "/api/customer/favorite/" + productId;
+   const headers = {
+     headers:{
+         Authorization:"Bearer " + token
+        }
+   }
+   try{
+     const response = await axios.put(endPoint, headers);
+     console.log(response)
+   }catch(responseError){
+     console.error(responseError.response);
+   }
+    // alert(endPoint);
+  }
 
   return (
     <Container fluid padded className="product-item-container container">
@@ -154,7 +174,9 @@ function ProductItemLayout(props) {
           </Segment>
           <Grid>
             <GridColumn width="2">
-              <i class="far fa-heart favourite"></i>
+            <Button basic color='red' size='huge'   onClick={addToFavorites} title='Add this item to my Favorites'>
+              <i class="far fa-heart "></i> 
+             </Button>
             </GridColumn>
             <GridColumn width="14">
               <button className="product-item-addtocart " onClick={addToCart}>
