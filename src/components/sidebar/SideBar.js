@@ -4,6 +4,7 @@ import "./SideBar.css";
 import "../../styles/Components/_button.scss";
 import { UserContext } from "../../context/UserContext";
 const SideBar = ({ menuItems }) => {
+  
   const userCtx = useContext(UserContext);
   
   return (
