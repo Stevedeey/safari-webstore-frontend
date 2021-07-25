@@ -170,7 +170,7 @@ function ProductItemLayout(props) {
                   value={color}
                 />
               )}
-            </div>
+          </div>
           </Segment>
           <Grid>
             <GridColumn width="2">
