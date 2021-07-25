@@ -68,11 +68,29 @@ const AdminOrders = (props) => {
             accessor: 'paymentType',
           },
           {
+            Header: 'Change Status',
+            accessor: 'changeStatus',
+            Cell: ({ cell }) => (
+              <button value={cell.row.values.changeStatus} onClick={props.handleClickGroup}>
+                Change {cell.row.values.name}
+              </button>
+            )
+          },
+          {
             Header: 'Status',
             accessor: 'status',
             Filter: SelectColumnFilter,
             filter: 'includes',
           },
+          // {
+          //   Header: 'Change Status',
+          //   accessor: 'changeStatus',
+          //   Cell: ({ cell }) => (
+          //     <button value={cell.row.values.changeStatus} onClick={props.handleClickGroup}>
+          //       Change {cell.row.values.name}
+          //     </button>
+          //   )
+          // },
         ],
       },
     ],
