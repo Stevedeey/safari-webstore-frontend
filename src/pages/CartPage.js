@@ -26,13 +26,14 @@ function Cart() {
       const cartItem = await productApis.getCartItem();
       setUserCartItem(cartItem);
 
+
       const totalPrice = cartItem.length
         ? cartItem[cartItem.length - 1].total
         : 0;
       setTotalCartPrice(totalPrice);
     }
   };
-
+console.log("Page Cart iTEM", userCartItem);
   return (
     <>
       <CartLayout

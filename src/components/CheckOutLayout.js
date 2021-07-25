@@ -297,11 +297,7 @@ function CheckOutLayout() {
                 <input name="phoneNumber" onChange={handleOnchange} />
               </Form.Field>
               <Form.Field>
-                {/* <Checkbox
-                  className="checkout-checkbox"
-                  label="Set Default Shipping Address"
-                  onChange={(e, data) => handleOnChangeOnShippingAddress}
-                /> */}
+          
 
                 <Checkbox
                   toggle
@@ -414,7 +410,7 @@ function CheckOutLayout() {
                 <Grid.Column width={5}>
                   {console.log("llllllll",product)}
                   <img
-                  
+                  style={{width:"50px"}}
                     src={product.productImage}
                     alt={product.productName}
                     className="order-section-img"

@@ -26,7 +26,7 @@ const productApis = {
 
   getProductById: async (id) => {
     const { data: product } = await axios.get(`${BaseUrl}/products/${id}`);
-  console.log(product);
+
     return product;
   },
 
