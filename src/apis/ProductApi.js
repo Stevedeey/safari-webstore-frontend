@@ -47,6 +47,13 @@ const productApis = {
     return products;
   },
 
+  getAllProductsAdmin: async () => {
+    const { data: products } = await axios.get(`${BaseUrl}/products`, setHeader());
+
+    return products;
+  },
+  
+
   searchProductByParams: async (params) => {
     const { data: searchedProducts } = await axios.get(
       `${BaseUrl}/products/search?keyword=${params}`
