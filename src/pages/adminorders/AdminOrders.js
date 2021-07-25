@@ -5,15 +5,27 @@ import {Table, SelectColumnFilter} from '../../components/table/Table';
 import OrderApi from '../../apis/OrderApi';
 
 // const status = "pending"
+// getAllProducts: async () => {
+//   const { data: products } = await axios.get(`${BaseUrl}/products`);
 
+//   return products;
+// },
 const AdminOrders = (props) => {
   const [data, setdata] = useState([]);
+  // const [total, setTotal] = useState(0);
 
    useEffect(() => {
 
     (async()=>{
-      const result = await OrderApi.adminGetAllOrders();    
+      const result = await OrderApi.adminGetAllOrders();   
+      // let total = 0;
+      // result.map(each=>{
+      //   total += each.totalCost;
+      // })
+      // setTotal(total);
+      console.log(result, "hiiiiiiiiiiii")
       setdata(result);
+
     })();
    }, [])
 
