@@ -76,7 +76,7 @@ const AddressBook = (props) => {
    React.useEffect(() => {
     (async()=>{
       const allAddresses = await AddressApi.getAllUserAddresses();
-      const addressesExceptDefault = defaultAddress !== null && defaultAddress.length !== 0 ? allAddresses.filter(address => address.id !== defaultAddress.id) : allAddresses;
+      const addressesExceptDefault = allAddresses.filter(address => address.id !== defaultAddress.id);
       setAddresses(addressesExceptDefault);
     })();
    })
@@ -87,7 +87,7 @@ const AddressBook = (props) => {
          <h1 className="title">Address Book</h1>
          {
           
-          defaultAddress != null && defaultAddress.length !== 0 ? 
+          defaultAddress.id !== undefined ? 
             (
               <div className="shell-wrapper">
                 <h3 className="shell-title"> Default Shipping Address </h3>
