@@ -13,7 +13,7 @@ function SearchLayout() {
 
     (async () => {
       const products = await productApis.searchProductByParams(keyword);
-      console.log(products.content);
+      console.log("This one is good",products.content);
       setSearchedProduct(products.content);
     })();
   }, []);
@@ -32,7 +32,7 @@ function SearchLayout() {
                 <CardProductItem
                   key={index}
                   id={product.id}
-                  src="/images/products/gustavo-spindula-l7wrlsKDmCE-unsplash 1.png"
+                  src={product.productImages[0].image}
                   name={product.name}
                   price={"₦" + product.price}
                   path={`/cart/${product.id}`}
@@ -49,5 +49,6 @@ function SearchLayout() {
     </div>
   );
 }
+
 
 export default SearchLayout;

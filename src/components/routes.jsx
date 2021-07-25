@@ -22,11 +22,12 @@ import SearchPage from "../pages/SearchPage";
 import FavouritesPage from "../pages/FavouritesPage";
 import ConfirmOrderPage from "../pages/ConfirmOrderPage";
 import ProtectedRoute from "./ProtectedRoute";
+import SuccessPayment from "../pages/SuccessPayment";
 
 
 
-const Routes = ()=>(
-    <Switch>
+const Routes = () => (
+  <Switch>
     <Route path="/" exact component={Home} />
     <Route path="/about" component={About} />
     <Route path="/contact" component={Contact} />
@@ -39,10 +40,7 @@ const Routes = ()=>(
     <ProtectedRoute path="/account/information" component={AccountInfo} />
     <Route path="/account/addressbook" component={AccountAddressBook} />
     <Route path="/account/myorders" component={AccountMyOrders} />
-    <Route
-      path="/account/myfavourites"
-      component={AccountMyFavourites}
-    />
+    <Route path="/account/myfavourites" component={AccountMyFavourites} />
     <ProtectedRoute path="/admin/dashboard" component={AdminDashboard} />
     <Route path="/favourites" component={FavouritesPage} />
     <ProtectedRoute path="/admin/orders" component={AdminOrders} />
@@ -53,6 +51,7 @@ const Routes = ()=>(
     <Route path="/product" component={ProductPage} />
     <Route path="/search" component={SearchPage} />
     <Route path="/checkout" component={Checkout} />
+    <Route path="/success-payment?orderId=id&statusCode=code" component={SuccessPayment} />
   </Switch>
 );
 
