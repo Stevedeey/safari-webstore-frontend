@@ -1,6 +1,6 @@
 export const sizes = [
   {value: 'XXS', label:'XXS'},
-  {value: 'XXL', label:'XXL'},
+  // {value: 'XXL', label:'XXL'},
   {value: 'XS', label:'XS'},
   {value: 'S', label:'S'},
   {value: 'M', label:'M'},
