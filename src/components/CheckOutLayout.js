@@ -509,7 +509,7 @@ function CheckOutLayout() {
             </p>
 
             <button onClick={handleOnSubmit} className="place-order">
-              PLACE ORDER{" "}
+              PLACE ORDER
             </button>
           </Grid>
         </Grid.Column>

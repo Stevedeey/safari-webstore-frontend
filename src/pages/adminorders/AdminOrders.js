@@ -59,10 +59,10 @@ const AdminOrders = (props) => {
             Header: 'Total Cost',
             accessor: 'totalCost',
           },
-          {
-            Header: 'Delivery Method',
-            accessor: 'deliveryMethod',
-          },
+          // {
+          //   Header: 'Delivery Method',
+          //   accessor: 'deliveryMethod',
+          // },
           {
             Header: 'Payment Type',
             accessor: 'paymentType',
