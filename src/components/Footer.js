@@ -11,7 +11,7 @@ function Footer() {
       <div class='footer-links'>
         <div className='footer-link-wrapper'>
           <div class='footer-link-items'>
-          <img src="http://localhost:3000/images/navbar/Logo.png" alt="" />
+          <img src="https://safari-web-store.web.app/images/navbar/Logo.png" alt="Footer Logo" />
           </div>
         </div>
         <div className='footer-link-wrapper'>
@@ -40,7 +40,7 @@ function Footer() {
         </div>
         <div className='footer-link-wrapper'>
           <div class='footer-link-items'>
-          <p>Lorem ipsum dolor sit. <br/>
+          <p>Safari web store<br/>
               +23401234567890<br />
               safari@localhost.com 
               </p>
