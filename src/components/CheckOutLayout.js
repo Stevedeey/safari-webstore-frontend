@@ -58,6 +58,8 @@ function CheckOutLayout() {
 
   const [paymentType, setPaymentType] = useState("");
 
+  const [itemQuantity, setItemQuantity] = useState(0);
+
   const [defaultShippingAddress, setDefaultShippingAddress] = useState(false);
 
   const [cardPercentage, setCardPercentage] = useState(0);
@@ -99,6 +101,9 @@ function CheckOutLayout() {
     //set arrayIds
 
     setArrayOfIds(arrayIds);
+
+    //  qty= cartItem.quantity;
+    // setitemQuantity(qty);
   }, []);
 
   const handleOnChangeOnShippingAddress = (evt, data) => {
@@ -222,11 +227,11 @@ function CheckOutLayout() {
       dateOrdered: dateDelivered(),
       dateDelivered: "null",
       deliveryFee: deliveryFee,
-      deliveryMethod: "null",
+      deliveryMethod: "card",
       isGift: isGift,
       paymentType: paymentType,
       price: 0,
-      quantity: "string",
+      quantity: itemQuantity,
       shippingAddress: {
         address: formData.address,
         city: province,
@@ -439,14 +444,23 @@ function CheckOutLayout() {
                   <span>
                     Qty
                     <button
-                      onClick={() => incrementQuality(product)}
+                      onClick={() => {incrementQuality(product)
+                      setItemQuantity(product.quantity)
+                      console.log("qty", product.quantity)
+
+                      }}
                       className=" qty qtyplus"
                     >
                       +
                     </button>
                     <input className="inputqty" value={product.quantity} />
                     <button
-                      onClick={() => decrementQuality(product)}
+                      onClick={() => {
+                        decrementQuality(product)
+                      setItemQuantity(product.quantity)
+                      console.log("qty", product.quantity)
+                      }
+                      }
                       className="qty qtyminus"
                     >
                       -
@@ -510,7 +524,7 @@ function CheckOutLayout() {
             </p>
 
             <button onClick={handleOnSubmit} className="place-order">
-              PLACE ORDER{" "}
+              PLACE ORDER
             </button>
           </Grid>
         </Grid.Column>

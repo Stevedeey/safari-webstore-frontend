@@ -52,16 +52,16 @@ const AdminProductList = (props) => {
             Header: 'Colour',
             accessor: 'colors[0].color',
           },
-          {
-            Header: '',
-            accessor: 'edit',
-            Cell: ({ cell }) => (
-                <button value={cell.row.values.edit} onClick={props.handleClickGroup}>
-                  Edit
-                   {/* {cell.row.values.name} */}
-                </button>
-              )
-          },
+          // {
+          //   Header: '',
+          //   accessor: 'edit',
+          //   Cell: ({ cell }) => (
+          //       <button value={cell.row.values.edit} onClick={props.handleClickGroup}>
+          //         Edit
+          //          {/* {cell.row.values.name} */}
+          //       </button>
+          //     )
+          // },
           {
             Header: '',
             accessor: 'delete',

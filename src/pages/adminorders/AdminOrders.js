@@ -59,13 +59,22 @@ const AdminOrders = (props) => {
             Header: 'Total Cost',
             accessor: 'totalCost',
           },
-          {
-            Header: 'Delivery Method',
-            accessor: 'deliveryMethod',
-          },
+          // {
+          //   Header: 'Delivery Method',
+          //   accessor: 'deliveryMethod',
+          // },
           {
             Header: 'Payment Type',
             accessor: 'paymentType',
+          },
+          {
+            Header: 'Change Status',
+            accessor: 'changeStatus',
+            Cell: ({ cell }) => (
+              <button value={cell.row.values.changeStatus} onClick={props.handleClickGroup}>
+                Change {cell.row.values.name}
+              </button>
+            )
           },
           {
             Header: 'Status',
@@ -73,6 +82,15 @@ const AdminOrders = (props) => {
             Filter: SelectColumnFilter,
             filter: 'includes',
           },
+          // {
+          //   Header: 'Change Status',
+          //   accessor: 'changeStatus',
+          //   Cell: ({ cell }) => (
+          //     <button value={cell.row.values.changeStatus} onClick={props.handleClickGroup}>
+          //       Change {cell.row.values.name}
+          //     </button>
+          //   )
+          // },
         ],
       },
     ],
