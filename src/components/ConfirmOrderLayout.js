@@ -107,7 +107,7 @@ function ConfirmOrderLayout() {
                   <Grid.Column width="11">
                     <p>{each.name}</p>
                     <p>₦{monetize(each.price)}</p>
-                    <p>QTY: {each.quantity}</p>
+                    <p>QTY: {parsedData.data.quantity}</p>
                   </Grid.Column>
                 </Grid>
               );
