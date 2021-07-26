@@ -31,20 +31,26 @@ function ProductItemLayout(props) {
     setProduct(productData);
 
     const arrColor = productData.colors;
-    arrColor.unshift("Select Color");
+  
+    const newOptionColor = arrColor.map((list, index) => ({
+      key: index + 2,
+      text: list.color,
+      value: index + 2,
+    }));
 
-    const newOptionColor = arrColor.map((color, index) => {
-      return { key: index + 1, text: color, value: index + 1 };
-    });
+    newOptionColor.unshift({ key: 1, text: "Select Color", value: 1 });
 
     setColors(newOptionColor);
 
     const arrSize = productData.sizes;
-    arrSize.unshift("Select Size");
 
-    const newOptionSize = arrSize.map((size, index) => {
-      return { key: index + 1, text: size, value: index + 1 };
-    });
+    const newOptionSize = arrSize.map((list, index) => ({
+      key: index + 2,
+      text: list.size,
+      value: index + 2,
+    }));
+
+    newOptionSize.unshift({ key: 1, text: "Select Size", value: 1 });
 
     setSizes(newOptionSize);
   }, []);
@@ -70,7 +76,9 @@ function ProductItemLayout(props) {
       description: product.description,
       size: size == "Select Size" ? null : size,
       color: color == "Select Color" ? null : color,
-      productImage: product.length ? props.productImage[0] : "",
+      productImage: product.hasOwnProperty("productImages")
+        ? product.productImages[0].image
+        : "",
     };
 
     const response = await productApis.addProductToCart(orderItems);
@@ -79,6 +87,8 @@ function ProductItemLayout(props) {
       setMessage(response.message);
       incrementCartItem();
     } else setMessage("Error adding product to cart, please check back later");
+
+    console.log("Ordered Items", orderItems);
   };
 
   //track the size picked from the lists of sizes
@@ -99,16 +109,21 @@ function ProductItemLayout(props) {
     setColor(textField);
   };
 
+  // console.log("Talo dabi re ", product);
+  // console.log("optionssize ", optionssize);
+
   return (
     <Container fluid padded className="product-item-container container">
       <Grid>
         <GridColumn mobile={16} tablet={16} widescreen={8} computer={8}>
           <Segment>
-            <Image
-              src="http://localhost:3000/images/products/gustavo-spindula-l7wrlsKDmCE-unsplash%201.png"
-              alt="product-item-placeholder"
-              centered
-            ></Image>
+            {product.hasOwnProperty("productImages") && (
+              <Image
+                src={product.productImages[0].image}
+                alt="product-item-placeholder"
+                centered
+              ></Image>
+            )}
           </Segment>
           <Segment>
             <h5 className="product-item-description">Description</h5>
@@ -132,6 +147,7 @@ function ProductItemLayout(props) {
               </span>
             </p>
             <p className="product-item-size">Size</p>
+
             <Dropdown
               selection
               options={optionssize}
@@ -140,17 +156,21 @@ function ProductItemLayout(props) {
               className="product-item-size-dropdown"
               value={size}
             />
+
             <p className="product-item-color">Color</p>
             <div className="product-item-categorycolor">
-              <Dropdown
-                selection
-                options={optionscolor}
-                onChange={trackColorInput}
-                placeholder={color}
-                className="product-item-size-dropdown"
-                value={color}
-              />
-            </div>
+              {product.hasOwnProperty("productImages") && (
+                <Dropdown
+                  selection
+                  // options={optionscolor}
+                  options={optionscolor}
+                  onChange={trackColorInput}
+                  placeholder={color}
+                  className="product-item-size-dropdown"
+                  value={color}
+                />
+              )}
+          </div>
           </Segment>
           <Grid>
             <GridColumn width="2">
