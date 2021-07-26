@@ -47,6 +47,8 @@ function CheckOutLayout() {
 
   const [paymentType, setPaymentType] = useState("");
 
+  const [itemQuantity, setItemQuantity] = useState(0);
+
   const [defaultShippingAddress, setDefaultShippingAddress] = useState(false);
 
   //CLASSNAME initialization
@@ -71,6 +73,7 @@ function CheckOutLayout() {
   const [formData, setFormData] = useState(intitialState);
   //initializing data **************************************
 
+  // let qty = "";
   useEffect(async () => {
     const cartItem = await productApis.getCartItem();
 
@@ -86,6 +89,9 @@ function CheckOutLayout() {
     //set arrayIds
 
     setArrayOfIds(arrayIds);
+
+    //  qty= cartItem.quantity;
+    // setitemQuantity(qty);
   }, []);
 
   const handleOnChangeOnShippingAddress = (evt, data) => {
@@ -203,11 +209,11 @@ function CheckOutLayout() {
       dateOrdered: dateDelivered(),
       dateDelivered: "null",
       deliveryFee: deliveryFee,
-      deliveryMethod: "null",
+      deliveryMethod: "card",
       isGift: isGift,
       paymentType: paymentType,
       price: 0,
-      quantity: "string",
+      quantity: itemQuantity,
       shippingAddress: {
         address: formData.address,
         city: province,
@@ -297,11 +303,7 @@ function CheckOutLayout() {
                 <input name="phoneNumber" onChange={handleOnchange} />
               </Form.Field>
               <Form.Field>
-                {/* <Checkbox
-                  className="checkout-checkbox"
-                  label="Set Default Shipping Address"
-                  onChange={(e, data) => handleOnChangeOnShippingAddress}
-                /> */}
+          
 
                 <Checkbox
                   toggle
@@ -414,7 +416,7 @@ function CheckOutLayout() {
                 <Grid.Column width={5}>
                   {console.log("llllllll",product)}
                   <img
-                  
+                  style={{width:"50px"}}
                     src={product.productImage}
                     alt={product.productName}
                     className="order-section-img"
@@ -429,14 +431,23 @@ function CheckOutLayout() {
                   <span>
                     Qty
                     <button
-                      onClick={() => incrementQuality(product)}
+                      onClick={() => {incrementQuality(product)
+                      setItemQuantity(product.quantity)
+                      console.log("qty", product.quantity)
+
+                      }}
                       className=" qty qtyplus"
                     >
                       +
                     </button>
                     <input className="inputqty" value={product.quantity} />
                     <button
-                      onClick={() => decrementQuality(product)}
+                      onClick={() => {
+                        decrementQuality(product)
+                      setItemQuantity(product.quantity)
+                      console.log("qty", product.quantity)
+                      }
+                      }
                       className="qty qtyminus"
                     >
                       -
@@ -498,7 +509,7 @@ function CheckOutLayout() {
             </p>
 
             <button onClick={handleOnSubmit} className="place-order">
-              PLACE ORDER{" "}
+              PLACE ORDER
             </button>
           </Grid>
         </Grid.Column>

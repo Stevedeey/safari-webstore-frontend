@@ -31,14 +31,15 @@ function CartLayout(props) {
         </Grid.Column>
       </Grid>
       {props.userCartItem.map((item) => {
-        console.log(item)
+        console.log("Item::",item)
         return (
           <div className="cart-items">
             <Grid padded className="carts cart" key={item.id}>
               <Grid.Column mobile={16} tablet={8} computer={8}>
                 <Grid>
                   <Grid.Column mobile={16} tablet={8} computer={3}>
-                    <img src={item.productImage} alt={item.name} />
+                   
+                    <img style={{width:"50px"}} src={item.productImage} alt={item.name} />
                   </Grid.Column>
                   <Grid.Column mobile={16} tablet={8} computer={9} className="">
                     {item.name}

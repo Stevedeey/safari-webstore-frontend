@@ -35,7 +35,6 @@ function ConfirmOrderLayout() {
 
   const deliveryFee = parsedData.data.deliveryFee;
 
-
   const handlePayement = async () => {
     const orderData = JSON.parse(localStorage.getItem("order"));
 
@@ -54,13 +53,11 @@ function ConfirmOrderLayout() {
 
       confirmMessage.style.display = "block";
     }
-    if (paymentType === "Pay with card"){
-       buttonPayment.style.display = "block";
+    if (paymentType === "Pay with card") {
+      buttonPayment.style.display = "block";
 
-       confirmMessage.style.display = "none";
-
+      confirmMessage.style.display = "none";
     }
-  
   }, []);
 
   return (
@@ -95,16 +92,22 @@ function ConfirmOrderLayout() {
           <Segment>
             <h3>Your Order({orderedItems.length})</h3>
             {orderedItems.map((each) => {
-              {console.log("llllllll",each)}
+              {
+                console.log("llllllll", each);
+              }
               return (
                 <Grid className="order">
                   <Grid.Column width="5">
-                    <img src={each.productImage} alt={each.name} />
+                    <img
+                      style={{ width: "50px" }}
+                      src={each.productImage}
+                      alt={each.name}
+                    />
                   </Grid.Column>
                   <Grid.Column width="11">
                     <p>{each.name}</p>
                     <p>₦{monetize(each.price)}</p>
-                    <p>QTY: {each.quantity}</p>
+                    <p>QTY: {parsedData.data.quantity}</p>
                   </Grid.Column>
                 </Grid>
               );

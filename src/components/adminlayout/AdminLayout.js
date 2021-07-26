@@ -19,8 +19,14 @@ const AdminLayout = ({ children }) => {
     },
     {
       icon: "",
-      name: "Products",
+      name: "Add Product",
       path: "/admin/products",
+      exact: true,
+    },
+    {
+      icon: "",
+      name: "Product List",
+      path: "/admin/productList",
       exact: true,
     },
   ];

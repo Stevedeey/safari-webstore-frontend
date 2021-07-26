@@ -26,7 +26,11 @@ const productApis = {
 
   getProductById: async (id) => {
     const { data: product } = await axios.get(`${BaseUrl}/products/${id}`);
+<<<<<<< HEAD
   // console.log(product);
+=======
+
+>>>>>>> 31c2de11461bd7183fcd5e2c2a3362db525fdb3e
     return product;
   },
 
@@ -46,6 +50,13 @@ const productApis = {
 
     return products;
   },
+
+  getAllProductsAdmin: async () => {
+    const { data: products } = await axios.get(`${BaseUrl}/products`, setHeader());
+
+    return products;
+  },
+  
 
   searchProductByParams: async (params) => {
     const { data: searchedProducts } = await axios.get(

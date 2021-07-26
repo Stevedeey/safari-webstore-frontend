@@ -132,7 +132,7 @@ const token = localStorage.getItem('token');
          <AdminLayout>
            <form onSubmit={submitHandler}>
              <div className="product-wrapper">
-               <h1 className="title"> Products </h1>
+               <h1 className="title"> Add To Products </h1>
                <div className="product-list-wrapper">
                  <h3 className="info-title"> Add Products </h3>
                  <div className="product-details-wrapper">

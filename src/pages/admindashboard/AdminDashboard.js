@@ -12,12 +12,23 @@ const AdminDashboard = (props) => {
   const [data, setdata] = useState({});
   const [products, setProducts] = useState([]);
   const [order, setOrder] = useState([]);
+  const [total, setTotal] = useState(0);
+  //me
+  const [revenue, setRevenue] = useState([]);
 
   useEffect(() => {
 
    (async()=>{
      const result = await AdminApi.getAdminDetails();    
      setdata(result);
+
+     const result2 = await OrderApi.adminGetAllOrders();   
+      let total = 0;
+      result2.map(each=>{
+        total += each.totalCost;
+      })
+      setTotal(total);
+
    })();
   }, [])
 
@@ -66,7 +77,7 @@ useEffect(() => {
            </div>
            <div className="info-content">
              <h3 className="info-title">Revenue</h3>
-             <h2>#371,335</h2>
+             <h2>{total}</h2>
            </div>
          </div>
 

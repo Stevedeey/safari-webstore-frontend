@@ -5,15 +5,27 @@ import {Table, SelectColumnFilter} from '../../components/table/Table';
 import OrderApi from '../../apis/OrderApi';
 
 // const status = "pending"
+// getAllProducts: async () => {
+//   const { data: products } = await axios.get(`${BaseUrl}/products`);
 
+//   return products;
+// },
 const AdminOrders = (props) => {
   const [data, setdata] = useState([]);
+  // const [total, setTotal] = useState(0);
 
    useEffect(() => {
 
     (async()=>{
-      const result = await OrderApi.adminGetAllOrders();    
+      const result = await OrderApi.adminGetAllOrders();   
+      // let total = 0;
+      // result.map(each=>{
+      //   total += each.totalCost;
+      // })
+      // setTotal(total);
+      console.log(result, "hiiiiiiiiiiii")
       setdata(result);
+
     })();
    }, [])
 
@@ -47,13 +59,22 @@ const AdminOrders = (props) => {
             Header: 'Total Cost',
             accessor: 'totalCost',
           },
-          {
-            Header: 'Delivery Method',
-            accessor: 'deliveryMethod',
-          },
+          // {
+          //   Header: 'Delivery Method',
+          //   accessor: 'deliveryMethod',
+          // },
           {
             Header: 'Payment Type',
             accessor: 'paymentType',
+          },
+          {
+            Header: 'Change Status',
+            accessor: 'changeStatus',
+            Cell: ({ cell }) => (
+              <button value={cell.row.values.changeStatus} onClick={props.handleClickGroup}>
+                Change {cell.row.values.name}
+              </button>
+            )
           },
           {
             Header: 'Status',
@@ -61,6 +82,15 @@ const AdminOrders = (props) => {
             Filter: SelectColumnFilter,
             filter: 'includes',
           },
+          // {
+          //   Header: 'Change Status',
+          //   accessor: 'changeStatus',
+          //   Cell: ({ cell }) => (
+          //     <button value={cell.row.values.changeStatus} onClick={props.handleClickGroup}>
+          //       Change {cell.row.values.name}
+          //     </button>
+          //   )
+          // },
         ],
       },
     ],
