@@ -53,7 +53,8 @@ const Routes = () => (
     <Route path="/product" component={ProductPage} />
     <Route path="/search" component={SearchPage} />
     <Route path="/checkout" component={Checkout} />
-    <Route path="/success-payment?orderId=id&statusCode=code" component={SuccessPayment} />
+    <Route path="/success-payment" component={SuccessPayment} />
+  
   </Switch>
 );
 

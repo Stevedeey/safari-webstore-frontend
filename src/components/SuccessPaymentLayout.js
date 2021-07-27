@@ -8,25 +8,32 @@ import {
   Form,
 } from "semantic-ui-react";
 import "../styles/Layout/_success-layout.scss";
+const handleBackToHome = (e) => {
+  e.preventDefault();
+  window.location.href = "/";
+};
 
 function SuccessPaymentLayout() {
-  return(
-    <Container className="success-container">
-    <Grid className="">
-      <Grid.Column width="10">
-            <Segment>
-                <img src="./images/success.png"/>
-                <h1>Successful</h1>
-                <button
-            id="success"
-            onClick=""
-            className="success-class"
-          >Home</button>
-            </Segment>
-      </Grid.Column>
-    </Grid>
-  </Container>
-
+  return (
+    <Container textAlign="center" className="success-container">
+      <Grid className="">
+        <Grid.Column width="4"></Grid.Column>
+        <Grid.Column width="8">
+          <Segment>
+            <img src="../images/success.png" />
+            <h1>Payment Successful!!! </h1>
+            <button
+              id="success"
+              onClick={handleBackToHome}
+              className="success-class"
+            >
+              Home
+            </button>
+          </Segment>
+        </Grid.Column>
+        <Grid.Column width="4"></Grid.Column>
+      </Grid>
+    </Container>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, GridColumn, Segment, Container } from "semantic-ui-react";
 import DashboardLayout from "../../components/userdashboard/DashboardLayout";
 import "../../styles/Layout/_myorders_layout.scss";
@@ -6,16 +6,15 @@ import Footer from "../../components/Footer";
 import OrderApi from "../../apis/OrderApi";
 
 const MyOrders = (props) => {
-
   const [userOrders, setUserOrders] = useState([]);
 
-  useEffect(()=>{
-    (async ()=>{
+  useEffect(() => {
+    (async () => {
       const userOrdersList = await OrderApi.getOrdersByUser();
 
-     setUserOrders(userOrdersList.content);
+      setUserOrders(userOrdersList.content);
     })();
-  },[])
+  }, []);
 
   return (
     <>
@@ -26,22 +25,30 @@ const MyOrders = (props) => {
           </Grid>
           <Segment>
             <Grid>
-              {userOrders.map(order=>(
+              {userOrders.map((order) => (
                 <>
                   <GridColumn mobile={16} tablet={8} computer={8}>
                     <Grid>
+                      {console.log("PRINTING ORDER", order)}
                       <GridColumn mobile={8} tablet={8} computer={8}>
                         <img
-                          src="../images/Casual Flat Loafers 2.png"
-                          alt=""
+                          // src="../images/Casual Flat Loafers 2.png"
+                          src={order.orderedItems[0].productImage}
+                          alt={order.orderedItems[0].name}
                           className="order-image"
                         />
                         <button className="order-status">Pending</button>
                       </GridColumn>
                       <GridColumn mobile={8} tablet={8} computer={8}>
-                        <p className="order-title">{order.orderedItems.productImage}</p>
-                        <span className="order-size">{order.orderedItems.size}</span>
-                        <p className="order-ammount">{order.orderedItems.price}</p>
+                        <p className="order-title">
+                          {order.orderedItems.productImage}
+                        </p>
+                        <span className="order-size">
+                          {order.orderedItems.size}
+                        </span>
+                        <p className="order-ammount">
+                          {order.orderedItems.price}
+                        </p>
                         <span>Qty: {order.quantity}</span>
                         <p className="order-date">{order.dateOrdered}</p>
                       </GridColumn>
@@ -52,15 +59,19 @@ const MyOrders = (props) => {
                     <span className="payment-details">
                       Item’s total - ₦{order.totalCost}
                     </span>
-                    <p className="payment-details">Delivery fee - ₦{order.deliveryFee} </p>
-                    <span className="payment-details">TOTAL - ₦ {order.totalCost} </span>
+                    <p className="payment-details">
+                      Delivery fee - ₦{order.deliveryFee}{" "}
+                    </p>
+                    <span className="payment-details">
+                      TOTAL - ₦ {order.totalCost}{" "}
+                    </span>
                   </GridColumn>
                   <GridColumn mobile={16} tablet={8} computer={4}>
                     <p className="order-payment">Delivery Method</p>
                     <span className="payment-detail">Door delivery</span>
                     <p className="order-payment">Shipping address</p>
                     <span className="payment-detail">
-                     {`${order.shippingAddress.address}, ${order.shippingAddress.city}`}
+                      {`${order.shippingAddress.address}, ${order.shippingAddress.city}`}
                     </span>
                   </GridColumn>
                 </>

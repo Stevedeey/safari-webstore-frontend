@@ -178,7 +178,7 @@ function ProductItemLayout(props) {
               {product.hasOwnProperty("productImages") && (
                 <Dropdown
                   selection
-                  // options={optionscolor}
+                  // options={optionscolo}
                   options={optionscolor}
                   onChange={trackColorInput}
                   placeholder={color}

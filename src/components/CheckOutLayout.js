@@ -22,12 +22,23 @@ const state = [
   { key: "Edo", text: "Edo", value: "Edo" },
   { key: "Lagos", text: "Lagos", value: "Lagos" },
   { key: "Abuja", text: "Abuja", value: "Abuja" },
+  { key: "Osun", text: "Osun", value: "Osun" },
+  { key: "Oyo", text: "Oyo", value: "Oyo" },
+  { key: "Ogun", text: "Ogun", value: "Ogun" },
+  { key: "Ondo", text: "Ondo", value: "Ondo" },
+  { key: "Ekiti", text: "Ekiti", value: "Ekiti" },
+  { key: "Kwara", text: "Kwara", value: "Kwara" },
+  { key: "Anambra", text: "Anambra", value: "Anambra" },
+  { key: "Enugu", text: "Enugu", value: "Enugu" },
+  { key: "Imo", text: "Imo", value: "Imo" },
 ];
 
 const city = [
   { key: "Edo", text: "Edo", value: "Edo" },
   { key: "Lagos", text: "Lagos", value: "Lagos" },
   { key: "Abuja", text: "Abuja", value: "Abuja" },
+  { key: "Porthacourt", text: "Porthacourt", value: "Porthacourt" },
+  { key: "Aba", text: "Aba", value: "Aba" },
 ];
 
 function CheckOutLayout() {
@@ -51,13 +62,10 @@ function CheckOutLayout() {
 
   const [defaultShippingAddress, setDefaultShippingAddress] = useState(false);
 
+  const [cardPercentage, setCardPercentage] = useState(0);
+
   //CLASSNAME initialization
   const giftActiveClass = isGift ? "gift-yes " : "gift-no";
-
-  //CALCULATION **************************************
-  let cardPercentage = totalCartPrice * 0.05;
-  let total = totalCartPrice - cardPercentage + deliveryFee;
-  //CALCULATION **************************************
 
   // handling states for selection
   const [stateLocation, setStateLocation] = useState("");
@@ -73,7 +81,11 @@ function CheckOutLayout() {
   const [formData, setFormData] = useState(intitialState);
   //initializing data **************************************
 
-  // let qty = "";
+  //CALCULATION totalPrice**************************************
+
+  let total = totalCartPrice - cardPercentage + deliveryFee;
+  //CALCULATION totalPrice**************************************
+
   useEffect(async () => {
     const cartItem = await productApis.getCartItem();
 
@@ -102,7 +114,6 @@ function CheckOutLayout() {
   };
 
   const incrementQuality = (product) => {
-   
     const exist = cart.find(
       (eachProduct) => eachProduct.productId === product.productId
     );
@@ -144,15 +155,22 @@ function CheckOutLayout() {
     }
   };
 
+  const handleCardPercentage = () => {
+    let cardPercent = totalCartPrice * 0.05;
+    setCardPercentage(cardPercent);
+  };
+
   const handlePaymentDelivery = (e) => {
     if (e.target.value === "delivery") {
       setPayOnDelivery(true);
       setDeliveryFee(2000);
       setPaymentType("Pay on delivery");
+      setCardPercentage(0);
     } else {
       setPayOnDelivery(false);
       setDeliveryFee(0);
       setPaymentType("Pay with card");
+      handleCardPercentage();
     }
   };
 
@@ -303,8 +321,6 @@ function CheckOutLayout() {
                 <input name="phoneNumber" onChange={handleOnchange} />
               </Form.Field>
               <Form.Field>
-          
-
                 <Checkbox
                   toggle
                   label="Set as Default Shipping Address"
@@ -410,13 +426,10 @@ function CheckOutLayout() {
             <h4 className="order-summary">ORDER SUMMARY</h4>
 
             {cart.map((product) => (
-              
-            
               <Grid key={product.productId}>
                 <Grid.Column width={5}>
-                  {console.log("llllllll",product)}
                   <img
-                  style={{width:"50px"}}
+                    style={{ width: "50px" }}
                     src={product.productImage}
                     alt={product.productName}
                     className="order-section-img"
@@ -468,7 +481,7 @@ function CheckOutLayout() {
               </Grid.Column>
               <Grid.Column width={8}>
                 <Container textAlign="right">
-                  <p>₦ {monetize(totalCartPrice)}</p>
+                  <p>₦ {monetize(totalCartPrice.toFixed(2))}</p>
                   <p>- ₦ {monetize(cardPercentage.toFixed(2))}</p>
                   <p>{deliveryFee}</p>
                 </Container>
@@ -483,7 +496,9 @@ function CheckOutLayout() {
               </Grid.Column>
               <Grid.Column width={8}>
                 <Container textAlign="right">
-                  <p className="checkout-total-cost">₦ {monetize(total)}</p>
+                  <p className="checkout-total-cost">
+                    ₦ {monetize(total.toFixed(2))}
+                  </p>
                 </Container>
               </Grid.Column>
             </Grid>
