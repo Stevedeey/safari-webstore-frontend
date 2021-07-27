@@ -130,12 +130,13 @@ function ProductItemLayout(props) {
   return (
     <Container fluid padded className="product-item-container container">
       <Grid>
-        <GridColumn mobile={16} tablet={16} widescreen={8} computer={8}>
+        <GridColumn mobile={16} tablet={16} widescreen={8} computer={6}>
           <Segment>
             {product.hasOwnProperty("productImages") && (
               <Image
                 src={product.productImages[0].image}
                 alt="product-item-placeholder"
+                height="500px"
                 centered
               ></Image>
             )}
@@ -145,7 +146,7 @@ function ProductItemLayout(props) {
             <p className="product-item-description-p">{product.description}</p>
           </Segment>
         </GridColumn>
-        <GridColumn mobile={16} tablet={16} widescreen={8} computer={8}>
+        <GridColumn mobile={16} tablet={16} widescreen={8} computer={10}>
           <Segment>
             <h3 className="product-item-title">{product.name}</h3>
             <p className="product-item-price">₦{product.price}</p>
