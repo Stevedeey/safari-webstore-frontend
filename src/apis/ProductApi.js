@@ -20,19 +20,23 @@ const productApis = {
     const products = await allProducts.content;
     return products.filter(product=>product.category[0].name === category);
     }catch(error){
-        console.log(error);
+        // console.log(error);
     }
   },
 
   getProductById: async (id) => {
     const { data: product } = await axios.get(`${BaseUrl}/products/${id}`);
+<<<<<<< HEAD
+  // console.log(product);
+=======
 
+>>>>>>> 31c2de11461bd7183fcd5e2c2a3362db525fdb3e
     return product;
   },
 
   getFavorites: async ()=>{
     // let favorites = null;
-    console.log("in get favourites", setHeader())
+    // console.log("in get favourites", setHeader())
     try{
     const favourites = await axios.get(`${BaseUrl}/api/customer/favourite/products`, setHeader());
     return favourites;
@@ -68,7 +72,7 @@ const productApis = {
     });
     const { data: itemsInCartDB } = response;
 
-    console.log("inside the GETALLPRODUCTSINCART function", response);
+    // console.log("inside the GETALLPRODUCTSINCART function", response);
 
     return itemsInCartDB;
   },
@@ -125,7 +129,7 @@ const productApis = {
       );
       let data = await response.json();
       //   alert("Item Added To Cart");
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       //   alert("Something Went Wrong");
       console.log(err);
@@ -149,7 +153,7 @@ const productApis = {
       );
       let data = await response.json();
       //   alert("Item Added To Cart");
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       // alert("Something Went Wrong");
       console.log(err);

@@ -34,7 +34,7 @@ const Account = (props) => {
       });
 
       const userDetails = await response.data;
-      console.log(userDetails);
+      // console.log(userDetails);
       setFields((fields) => ({ ...fields, ...userDetails }));
     } catch (exception) {
       setFields((fields) => ({ ...fields }));
