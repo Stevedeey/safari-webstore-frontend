@@ -26,11 +26,6 @@ const productApis = {
 
   getProductById: async (id) => {
     const { data: product } = await axios.get(`${BaseUrl}/products/${id}`);
-<<<<<<< HEAD
-  // console.log(product);
-=======
-
->>>>>>> 31c2de11461bd7183fcd5e2c2a3362db525fdb3e
     return product;
   },
 
