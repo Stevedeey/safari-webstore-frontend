@@ -1,25 +1,28 @@
 import React from "react";
-// import './css/Pagination.css';
-// import { Link } from 'react-router-dom';
 import { Container } from "semantic-ui-react";
 
-export default function Pagination() {
-  return (
-    <Container textAlign="center">
-      <div className="pagination">
-        <a href="/" className="blocks active-pagination">
-          1
-        </a>
-        <a href="/" className="blocks">
-          2
-        </a>
-        <a href="/" className="blocks">
-          3
-        </a>
-        <a href="/" className="blocks">
-          <img src="/images/next.svg" alt="pagination-next" />
-        </a>
-      </div>
-    </Container>
-  );
+
+const Pagination = ({ itemsPerPage, totalPages, paginate, currentPage}) => {
+    const pageNumbers = [];
+
+    const size = Math.ceil(totalPages / itemsPerPage);
+
+    for (let i = 1; i <= size ; i++) {
+        pageNumbers.push(i);
+    }
+
+    return (
+      <Container textAlign="center">
+        <div className="pagination">
+            {
+                pageNumbers.map(
+                    number => <button key={number} href="#" onClick={() => paginate(number)} className={number === currentPage ? "blocks active" : "blocks inactive" } >{number}</button>
+                )
+            }
+        </div>
+      </Container>
+
+    )
 }
+
+export default Pagination;
