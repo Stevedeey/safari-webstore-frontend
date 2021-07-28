@@ -80,7 +80,8 @@ function ProductItemLayout(props) {
       description: product.description,
       size: size === "Select Size" ? null : size,
       color: color === "Select Color" ? null : color,
-      productImage: product.length ? props.productImage[0] : "",
+      productImage: product.hasOwnProperty("productImages")
+       ? product.productImages[0].image : "",
     };
 
     const response = await productApis.addProductToCart(orderItems);
