@@ -4,19 +4,27 @@ import CartContext from "../store/Cart-Context";
 import { useContext } from "react";
 import { useState, useEffect } from "react";
 import productApis from "../apis/ProductApi";
+import Pagination from '../components/Pagination';
+
 
 function ShoesPage(props) {
   const cartCtx = useContext(CartContext);
 
   const { products } = props;
   console.log("THE CONTENT ISSSSSSS", products);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(12);
+  const indexOfLastProducts = currentPage * productsPerPage;
+  const indexOfFirstProducts = indexOfLastProducts - productsPerPage;
+  const currentProducts = products.slice(indexOfFirstProducts, indexOfLastProducts);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <div>
       <div className="productmain">
         <div className="cards__wrapper">
           <ul className="cards__items clothes__items">
-            {products ? (
-              products.map((product, index) => {
+            {currentProducts ? (
+              currentProducts.map((product, index) => {
                 return (
                 
                   <CardProductItem
@@ -33,6 +41,7 @@ function ShoesPage(props) {
               <div></div>
             )}
           </ul>
+          <Pagination itemsPerPage = {productsPerPage} totalPages={products.length} paginate={paginate} currentPage={currentPage} />
         </div>
       </div>
     </div>

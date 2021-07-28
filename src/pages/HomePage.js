@@ -11,7 +11,8 @@ function HomePage() {
     
     const [products, setProducts] = useState([]);
 
-    useEffect( async () => {
+    useEffect(() => {
+        (async () => {
         let mounted = true;
 
         const allProducts = await ProductApi.getAllProducts();
@@ -31,13 +32,22 @@ function HomePage() {
 
         return () => mounted = false;
 
+        })();
     }, [])
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [productsPerPage] = useState(16);
+    const indexOfLastProducts = currentPage * productsPerPage;
+    const indexOfFirstProducts = indexOfLastProducts - productsPerPage;
+    const currentProducts = products.slice(indexOfFirstProducts, indexOfLastProducts);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <>
         <Hero />
-        <CardHomeProducts products={products}/>
-        <Pagination />
+        <CardHomeProducts products={currentProducts}/>
+        <Pagination itemsPerPage = {productsPerPage} totalPages={products.length} paginate={paginate} currentPage={currentPage} />
         <Footer />
         </>
     )
