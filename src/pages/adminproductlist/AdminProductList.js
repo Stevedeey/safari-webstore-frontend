@@ -6,21 +6,16 @@ import ProductApi from '../../apis/ProductApi';
 
 const token = localStorage.getItem('token');
 const AdminProductList = (props) => {
-  const [data, setdata] = useState([]);
-  const [id, setId ]= useState("");
-  
+  const [data, setdata] = useState([]);  
 
    useEffect(() => {
 
     (async()=>{
       const result = await ProductApi.getAllProductsAdmin();   
     
-      console.log(result.content, "hiiiiiiiii")
       setdata(result.content);
     })();
    }, [])
-
-   const handleImageChange = (e) => {}
 
   const columns = useMemo(
     () => [
@@ -46,40 +41,20 @@ const AdminProductList = (props) => {
           },
           {
             Header: 'Size',
-            accessor: 'sizes[0].size',
+            accessor: 'sizes[0].size'
+            
           },
           {
             Header: 'Colour',
             accessor: 'colors[0].color',
-          },
-          // {
-          //   Header: '',
-          //   accessor: 'edit',
-          //   Cell: ({ cell }) => (
-          //       <button value={cell.row.values.edit} onClick={props.handleClickGroup}>
-          //         Edit
-          //          {/* {cell.row.values.name} */}
-          //       </button>
-          //     )
-          // },
-          {
-            Header: '',
-            accessor: 'delete',
-            Cell: ({ cell }) => (
-              <button value={cell.row.values.delete} onClick={props.handleClickGroup}>
-                Delete {cell.row.values.name}
-              </button>
-            )
-          },
+        }
+          
         ],
       },
     
     ],
     []
   )
-
-  
-
   return (
      <AdminLayout>
       <div className="orders-wrapper">
